@@ -1,0 +1,33 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> cuecrate@2.0.0 test
+> node --test tests/rest.test.cjs && node tests/evaluate.cjs
+
+✔ catalog count, genres, track detail and multi-artist search (9.767858ms)
+✔ REST and local ranker return identical tracks and scores (25.657925ms)
+✔ profile guardrails, malformed input and method handling (3.939482ms)
+✔ Spotify without keys uses a search link (0.389457ms)
+✔ Spotify exact title/artist, token reuse, unavailable and no-match states with a test double (1.578968ms)
+✔ Netlify adapter dispatches REST requests (1.644226ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 229.695612
+{
+  profiles: 19,
+  slots: 57,
+  direct: 57,
+  hybrid: 57,
+  changed: 4,
+  genreFilters: 103
+}
+Hip hop with bass: Big Plans Remix, Smooth casual, End Of Times
+Reggae with guitar: Condition Humaine, Hypnotic reagge, Age
+Jazz with piano: Night on the Docks - Piano, Voyageur, When I Was With You
+Study jazz: Samba Isobel, Ultralounge, Bass Vibes
+Workout rock: Neolith, Metalmania, Cool Rock
+Empty: empty; Urban + Harpsichord (strict): no_match

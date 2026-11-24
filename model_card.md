@@ -18,4 +18,4 @@ The user proposed the offline CSV-and-vector design. The first implementation us
 
 ## Misuse and safeguards
 
-The app labels results as feature compatibility, shows the artist and links to the recording. Only supplied BPM are used, and selecting tempo explains the coverage limit. All preferences stay in device memory. Academic dataset terms and source credits are in DATA_LICENSES.md. No Jamendo audio is distributed.
+The app labels results as feature compatibility, shows the artist and links to the recording. Only supplied BPM are used, and selecting tempo explains the coverage limit. By default, the device computes the preference profile in memory. Enabling REST ranking sends the selected features to the configured API. Catalog searches send the typed title or artist, and Spotify lookup sends a track query only when requested. Spotify results never enter training or ranking. Academic dataset terms and source credits are in DATA_LICENSES.md. No Jamendo audio is distributed.

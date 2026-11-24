@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "CueCrate",
+    "slug": "cuecrate",
+    "version": "2.0.0",
+    "scheme": "cuecrate",
+    "orientation": "default",
+    "userInterfaceStyle": "dark",
+    "web": {
+      "bundler": "metro",
+      "output": "single"
+    },
+    "android": {
+      "package": "com.cuecrate.mobile"
+    },
+    "ios": {
+      "bundleIdentifier": "com.cuecrate.mobile",
+      "supportsTablet": true
+    },
+    "plugins": [
+      [
+        "expo-audio",
+        {
+          "microphonePermission": false,
+          "recordAudioAndroid": false,
+          "enableBackgroundRecording": false,
+          "enableBackgroundPlayback": false
+        }
+      ]
+    ]
+  }
+}

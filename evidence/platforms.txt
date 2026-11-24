@@ -1,0 +1,13 @@
+Linux sandbox / Node 24.22.3 / npm 11.19.1 / Expo 58.0.26.
+npm ci --offline in a clean project directory with primed npm cache: 473 packages installed.
+Expo development server: local Expo CLI start --web --localhost --port 8081. UI and REST passed.
+npm run build: web export, bundled model, local media and offline cache.
+npm run preview: actual Chromium tests for REST, CSV, media, offline reload and local inference.
+Netlify CLI 27.20.1 / netlify dev --offline --no-open / local static server and Function:
+  GET http://localhost:8888/ -> 200
+  GET /api/health -> {"status":"ok","tracks":56656,"genres":103}
+  POST /api/recommendations with genre Hip Hop and instrument Bass -> Big Plans Remix.
+npx expo export --platform android --platform ios --output-dir dist-native:
+  Android and iOS Hermes JavaScript bundles and local media. No physical phone or simulator run.
+Spotify: no-key fallback verified in Chromium. Authenticated scenarios used a simulated upstream.
+The release was tested locally. No public deployment or GitHub push was performed.

@@ -1,0 +1,17 @@
+{
+  "server": "npx expo start --web",
+  "health": 56656,
+  "checks": [
+    "home genre",
+    "track details",
+    "Spotify without keys",
+    "REST search",
+    "REST ranking",
+    "CSV import",
+    "local audio playback",
+    "personalized home",
+    "responsive widths 320/390/1280"
+  ],
+  "offlineReloadSearchAndAudio": false,
+  "pageErrors": []
+}

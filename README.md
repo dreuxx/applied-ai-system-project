@@ -1,6 +1,17 @@
-# CueCrate Mobile
+# CueCrate · React Native, Expo and REST
 
-Download **CueCrate_Movil.html** and open the saved file in a browser with JavaScript. Everything needed for recommendation and the 28 audio previews is embedded in the file. No Python installation, API key, network connection or server is required on the phone. A file preview that disables scripts cannot run this app.
+Local-first music discovery across 56,656 recordings. The Expo project runs in a desktop browser and exports native JavaScript bundles for Android and iOS. The app ranks on-device by default and can send an explicitly selected profile to its REST service.
+
+## Run on a PC
+
+Use Node 24.22.3. From the directory containing package.json:
+
+```bash
+npm ci
+npx expo start --web
+```
+
+Open the Expo URL (usually http://localhost:8081). The same port serves the UI and the API. Test with `npm test`. For a static production build with offline caching, run `npm run build` and `npm run preview`. The included Netlify Function serves the same REST handler as Metro and Node. The original single-file offline HTML remains available in the repo. [Spanish setup, API, Spotify and deployment guide](INICIO_ES.md).
 
 ## Base project and design
 
@@ -8,9 +19,9 @@ The Module 3 **Music Recommender Simulation** ranked 18 hand-written tracks from
 
 ## Try it
 
-Start on **Inicio** and tap the **Hip hop** sleeve to run a hip-hop/bass profile. Tap *Big Plans Remix* by Kellee Maize to see its score, then **Usar como perfil** to find neighbors. **Explorar** lets you search 103 genres. **Perfil** contains the preference controls and the [CSV importer](data/preferencias.csv). The headphones button opens a selection with offline audio. Tap a track to play its excerpt.
+Start on **Inicio** and tap the **Hip hop** sleeve to run a hip-hop/bass profile. Tap *Big Plans Remix* by Kellee Maize to see its score, then **Usar como perfil** to find neighbors. **Explorar** lets you search 103 genres. **Perfil** contains the preference controls and the [CSV importer](data/preferencias.csv). The headphone icon opens a selection with offline audio. Tap a track to play its excerpt.
 
-[Design reference](assets/design-reference.webp) · [Implemented mobile screen](assets/mobile-home.png). The original editorial artwork is bundled locally. The discovery screen starts with three editorial picks. After a search, the home list shows the listener’s actual recommendations.
+[Design reference](assets/design-reference.webp) · [Expo app in a mobile viewport](assets/expo-home.png). The original editorial artwork is bundled locally. The discovery screen starts with three editorial picks. After a search, the home list shows the listener’s actual recommendations.
 
 ## Catalog and features
 
@@ -49,7 +60,7 @@ When a numeric tempo is requested, only the 1,196 tracks with measured or suppli
 
 ## Reproduce
 
-Open the bundled HTML directly for offline use. Developers can rebuild from the checked-in combined CSV using Python 3.12, NumPy 2.3.5, SciPy 1.17.0 and Node 22+. To regenerate the CSV from its sources first, run `python tools/catalog.py /path/to/cache` (requires network only if the pinned TSVs are absent).
+The production web app caches the catalog and local media on its first successful online load. Developers can rebuild from the checked-in combined CSV using Python 3.12, NumPy 2.3.5, SciPy 1.17.0 and Node 24.22.3. To regenerate the CSV from its sources first, run `python tools/catalog.py /path/to/cache` (requires network only if the pinned TSVs are absent).
 
 ```bash
 python -m pip install -r requirements.txt
@@ -64,6 +75,9 @@ Optional browser test from the project root:
 ```bash
 npm install --no-save playwright@1.62.1
 npx playwright install chromium
+npm run build
+node tests/expo-browser.mjs
+node tests/expo-browser.mjs --dev
 node tests/browser.mjs
 ```
 
@@ -87,7 +101,19 @@ Empty: empty; Urban + Harpsichord (strict): no_match
 
 The classifier experiment fits 28,099 tracks from 1,870 artist IDs and evaluates 5,975 tracks from 447 disjoint artist IDs. Tracks without any non-genre signal are excluded from classifier fitting and evaluation. A prediction is a hit if it matches any annotated genre. Top-1 hits were **3,025/5,975 (50.6%)** and top-3 hits were **4,268/5,975 (71.4%)**. Always predicting the most frequent training genre gave **1,912/5,975 (32.0%)**. The shipped classifier is refit on all 34,074 usable tracks. [Held-out predictions](evidence/holdout.csv) · [Aggregate counts](evidence/classifier.json).
 
-On 19 scripted preference profiles both direct and model-assisted ranking met the metadata criteria in 57/57 top-three positions. Adding the model changed four first choices. The harness also checked all 103 genre filters, seeded recommendations, bounds, empty input and impossible requests. The [browser test](evidence/browser.json) passed 35 checks in offline Chromium with touch emulation, including artist display, Jamendo URLs, CSV import, embedded playback, four viewport widths and zero network requests. Physical phones and listener satisfaction remain untested. [Profile-level outcomes](evidence/ranking.json).
+On 19 scripted preference profiles both direct and model-assisted ranking met the metadata criteria in 57/57 top-three positions. Adding the model changed four first choices. The harness also checked all 103 genre filters, seeded recommendations, bounds, empty input and impossible requests. The original standalone HTML [browser test](evidence/browser.json) passed 35 checks in offline Chromium with touch emulation, including artist display, Jamendo URLs, CSV import, embedded playback, four viewport widths and zero network requests. Physical phones and listener satisfaction remain untested. [Profile-level outcomes](evidence/ranking.json).
+
+### REST and Expo execution evidence
+
+```text
+GET /api/health → 200 {"status":"ok","tracks":56656,"genres":103}
+POST /api/recommendations {"genre":"Hip Hop","instruments":["Bass"],"strict":true}
+→ 200, first result: Big Plans Remix, Kellee Maize
+GET /api/tracks/track_0521030/spotify (no server credentials)
+→ 200, status: unconfigured, manual search link available
+```
+
+The browser suite exercised the Expo dev server and the production web export, including the actual REST requests, CSV selection, audio playback and offline reload. Six automated REST tests cover input handling, parity with local inference, the Netlify adapter and Spotify response handling. The exact-match, missing-match and rate-limit Spotify scenarios used simulated responses. A live authenticated Spotify catalog request and physical-device runs were not performed. [Development UI](evidence/expo-dev.json) · [Production and offline UI](evidence/expo-preview.json) · [Local platform checks](evidence/platforms.txt) · [REST tests](evidence/rest-tests.txt).
 
 ## Reflection and portfolio
 

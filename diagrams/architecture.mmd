@@ -1,16 +1,16 @@
 flowchart TD
- HF["Hugging Face / MTG-Jamendo"] --> CSV["Joined catalog"]
- IC["Incompetech CSV"] --> CSV
- CSV --> X["229-dimensional track vectors"]
- X --> T["103 genre classifiers / 126 input features"]
- X --> B["Embed model and catalog in HTML"]
- T --> B
- A["Audio excerpts"] --> B
- U["Listener form or CSV"] --> P["Preference vector"]
- B --> P
- P --> G["Independent genre estimates"]
- P --> F["Check genre, tags, tempo and preview availability"]
- G --> R["Rank and explain"]
- F --> R
- R --> H["Listener checks score and plays sample"]
- E["Evaluation harness"] -.-> R
+  CSV["MTG-Jamendo and Incompetech"] --> Train["Python training and sparse vectors"]
+  Train --> Model["Catalog and fitted weights"]
+  U["Listener profile or CSV"] --> UI["Expo app on web or mobile"]
+  UI --> Local["On-device scoring"]
+  UI -->|"Search or optional remote scoring"| API["REST on Metro, Node or Netlify"]
+  Model --> Local
+  Model --> API
+  API -->|"User requests Spotify lookup"| S["Spotify Web API"]
+  Local --> R["Ranked tracks and explanations"]
+  API --> R
+  S --> L["Recording or search link"]
+  R --> H["Listener opens track or plays sample"]
+  L --> H
+  E["Held-out artists and scripted tests"] -.-> Local
+  E -.-> API
