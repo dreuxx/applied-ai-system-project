@@ -128,10 +128,8 @@
   }
   function dirty() {
     seed = null;
-    $("list").replaceChildren();
-    $("explain").hidden = true;
-    $("status").textContent =
-      "Pulsa Recomendar música para comparar este perfil.";
+    $("profileStatus").textContent =
+      "Pulsa Recomendar música para aplicar tus cambios.";
   }
   function chips() {
     for (const [id, arr, labels, div] of [
@@ -169,120 +167,266 @@
     $("samplesOnly").checked = !!p.previews;
     chips();
   }
-  function draw(move = true) {
+  const art = JSON.parse($("art").textContent);
+  const sleeves = Object.values(art);
+  const editorial = ["track_0521030", "track_0030227", "USUAN1100001"].map(
+    (id) => d.tracks.find((s) => s[0] === id),
+  );
+  const browserGenres = d.genres
+    .map((genre, index) => ({ genre, index, label: tr(genre) }))
+    .sort((a, b) => a.label.localeCompare(b.label, "es"));
+  const dialog = $("trackDialog");
+  let latestRows = [],
+    latestProfile = null;
+  const screenIds = ["home", "explore", "profile"];
+  function navigate(id, push = true) {
+    if (!screenIds.includes(id)) id = "home";
+    for (const key of screenIds) $(key).hidden = key !== id;
+    for (const b of document.querySelectorAll("nav [data-view]")) {
+      if (b.dataset.view === id) b.setAttribute("aria-current", "page");
+      else b.removeAttribute("aria-current");
+    }
+    if (push && location.hash !== "#" + id) location.hash = id;
+    $(id).querySelector("h1").focus({ preventScroll: true });
+    window.scrollTo(0, 0);
+  }
+  document
+    .querySelectorAll("[data-view]")
+    .forEach((b) => (b.onclick = () => navigate(b.dataset.view)));
+  window.addEventListener("hashchange", () => {
+    const view = location.hash.slice(1) || "home";
+    if (!screenIds.includes(view) || $(view).hidden) navigate(view, false);
+  });
+  function iconArrow() {
+    const ns = "http://www.w3.org/2000/svg",
+      svg = document.createElementNS(ns, "svg"),
+      use = document.createElementNS(ns, "use");
+    svg.setAttribute("class", "go");
+    svg.setAttribute("aria-hidden", "true");
+    use.setAttribute("href", "#ico-next");
+    svg.append(use);
+    return svg;
+  }
+  function trackRow(song, artSrc, match = null, profile = null) {
+    const b = node("button", null, "trackRow"),
+      img = node("img", null, "cover"),
+      text = node("span");
+    img.src = artSrc;
+    img.alt = "";
+    text.append(
+      node("strong", song[1]),
+      node("small", song[7] ?? d.artists[song[6]]),
+    );
+    b.append(img, text, iconArrow());
+    b.onclick = () => openTrack(song, artSrc, match, profile);
+    return b;
+  }
+  function renderHome() {
+    const personal = latestRows.length > 0;
+    $("homeTitle").textContent = personal ? "Para ti" : "En rotación";
+    const rows = personal
+      ? latestRows.slice(0, 3)
+      : editorial.map((s) => ({ s }));
+    $("homeTracks").replaceChildren(
+      ...rows.map((v, j) =>
+        trackRow(
+          v.s,
+          sleeves[j],
+          personal ? v : null,
+          personal ? latestProfile : null,
+        ),
+      ),
+    );
+  }
+  function openTrack(s, artSrc, v, p) {
+    const content = $("trackContent");
+    content.replaceChildren();
+    const img = node("img", null, "sheetArt");
+    img.src = artSrc;
+    img.alt = "";
+    const title = node("h2", s[1]);
+    title.id = "trackTitle";
+    content.append(
+      img,
+      title,
+      node("p", s[7] ?? d.artists[s[6]], "artist"),
+      node(
+        "p",
+        s[2].map((j) => tr(d.genres[j])).join(" · ") +
+          (s[5] === null ? "" : " · " + s[5] + " BPM"),
+      ),
+    );
+    if (v) {
+      const detail = node("details"),
+        score = Math.round(v.score * 100);
+      detail.append(node("summary", score + "/100 · Ver puntuación"));
+      const facts = [
+        ...v.mh.map((j) => tr(d.moods[j])),
+        ...v.ih.map((j) => tr(d.instruments[j])),
+      ];
+      if (p.bpm !== null)
+        facts.push(Math.abs(p.bpm - s[5]) + " BPM de diferencia");
+      if (facts.length) detail.append(node("p", facts.join(" · ")));
+      const terms = Object.entries(v.parts).map(
+        ([k, x]) => (k === "animo" ? "ánimo" : k) + " " + (x * 100).toFixed(1),
+      );
+      detail.append(
+        node(
+          "p",
+          terms.length
+            ? terms.join(" + ") + " puntos."
+            : "Todas las coincidencias del género empatan.",
+        ),
+      );
+      content.append(detail);
+    }
+    if (bank.has(s[0])) {
+      const player = node("audio");
+      player.controls = true;
+      player.preload = "none";
+      player.src = "data:audio/mpeg;base64," + audio[s[0]];
+      player.setAttribute("aria-label", "Muestra de " + s[1]);
+      content.append(player);
+    }
+    const actions = node("div", null, "actions"),
+      similar = node("button", "Usar como perfil", "primary"),
+      link = node("a", "Ficha del autor ↗︎");
+    similar.onclick = () => {
+      dialog.close();
+      load({
+        g: p?.g ?? null,
+        m: s[3],
+        i: s[4],
+        bpm: s[5],
+        seed: s[0],
+        previews: p?.previews ?? false,
+      });
+      draw("Pistas similares");
+    };
+    link.href = s[0].startsWith("track_")
+      ? "https://www.jamendo.com/track/" + Number(s[0].slice(6))
+      : "https://incompetech.com/music/royalty-free/index.html?isrc=" +
+        encodeURIComponent(s[0]);
+    link.rel = "noopener noreferrer";
+    link.target = "_blank";
+    actions.append(similar, link);
+    content.append(actions);
+    dialog.showModal();
+  }
+  $("dismiss").onclick = () => dialog.close();
+  dialog.addEventListener("close", () => {
+    $("trackContent").querySelector("audio")?.pause();
+  });
+  dialog.addEventListener("click", (e) => {
+    if (e.target === dialog) {
+      const r = dialog.getBoundingClientRect();
+      if (
+        e.clientX < r.left ||
+        e.clientX > r.right ||
+        e.clientY < r.top ||
+        e.clientY > r.bottom
+      )
+        dialog.close();
+    }
+  });
+  function draw(title = "Tus recomendaciones") {
     const p = {
       g: $("genre").value === "" ? null : +$("genre").value,
-      m,
-      i,
+      m: [...m],
+      i: [...i],
       bpm: $("bpm").value === "" ? null : +$("bpm").value,
       strict: $("strict").checked,
       previews: $("samplesOnly").checked,
       seed,
     };
     const r = scoreMusic(d, p, bank);
-    $("list").replaceChildren();
-    $("explain").hidden = r.status === "empty";
+    latestProfile = p;
+    latestRows = r.rows;
+    $("heading").textContent = title;
     $("status").textContent =
       r.status === "empty"
-        ? "Elige un género, ánimo, instrumento o tempo para empezar."
+        ? "Elige un género o ajusta tu perfil para empezar."
         : r.status === "no_match"
-          ? "Sin coincidencias. Quita una etiqueta o amplía los filtros."
+          ? "Sin coincidencias. Quita una etiqueta o amplía tus filtros."
           : r.rows.length +
             " recomendaciones entre " +
-            r.eligible +
+            number(r.eligible) +
             " pistas elegibles.";
     if (seed)
       $("status").textContent +=
-        " Perfil de referencia: " +
-        d.tracks.find((s) => s[0] === seed)[1] +
-        ".";
-    for (const v of r.rows) {
-      const s = v.s,
-        a = node("article", null, "card"),
-        h = node("div", null, "head");
-      h.append(
-        node("h3", s[1]),
-        node("small", Math.round(v.score * 100) + "/100"),
-      );
-      a.append(
-        h,
-        node(
-          "p",
-          (s[7] ?? d.artists[s[6]]) +
-            " · " +
-            s[2].map((j) => tr(d.genres[j])).join(" / ") +
-            " · " +
-            (s[5] === null ? "Tempo sin datos" : s[5] + " BPM"),
-        ),
-      );
-      const facts = [
-        ...v.mh.map((j) => tr(d.moods[j])),
-        ...v.ih.map((j) => tr(d.instruments[j])),
-      ];
-      if (p.bpm !== null)
-        facts.push("diferencia de " + Math.abs(p.bpm - s[5]) + " BPM");
-      if (facts.length)
-        a.append(node("p", "Coincidencias: " + facts.join(" · ")));
-      const detail = node("details");
-      detail.append(
-        node("summary", "Ver puntuación"),
-        node(
-          "p",
-          Object.keys(v.parts).length
-            ? Object.entries(v.parts)
-                .map(([k, x]) => k + " " + (x * 100).toFixed(1))
-                .join(" + ") + " puntos."
-            : "Todas las coincidencias del género empatan.",
-        ),
-      );
-      a.append(detail);
-      if (bank.has(s[0])) {
-        const player = node("audio");
-        player.controls = true;
-        player.preload = "none";
-        player.src = "data:audio/mpeg;base64," + audio[s[0]];
-        a.append(player);
-      }
-      const b = node("button", "Usar como perfil", "link");
-      b.onclick = () => {
-        load({
-          g: p.g,
-          m: s[3],
-          i: s[4],
-          bpm: s[5],
-          seed: s[0],
-          previews: p.previews,
-        });
-        draw();
-      };
-      a.append(b);
-      const link = node("a", "Ficha del autor ↗");
-      link.href = s[0].startsWith("track_")
-        ? "https://www.jamendo.com/track/" + Number(s[0].slice(6))
-        : "https://incompetech.com/music/royalty-free/index.html?isrc=" +
-          encodeURIComponent(s[0]);
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      a.append(link);
-      $("list").append(a);
-    }
+        " A partir de " + d.tracks.find((s) => s[0] === seed)[1] + ".";
+    $("list").replaceChildren(
+      ...r.rows.map((v, j) => trackRow(v.s, sleeves[j % sleeves.length], v, p)),
+    );
+    $("explain").hidden = !r.rows.length;
+    $("explain").open = false;
     $("math").textContent =
       "La puntuación sobre 100 mide compatibilidad con tu selección. " +
       (r.prob.length
-        ? "El modelo estima cada etiqueta de género por separado; una canción puede tener varias: " +
+        ? "El modelo estima cada género por separado. " +
           r.prob
             .map((v, j) => [v, j])
             .sort((a, b) => b[0] - a[0])
             .slice(0, 3)
-            .map(([v, j]) => tr(d.genres[j]) + " " + (v * 100).toFixed(1) + "%")
+            .map(([v, j]) => tr(d.genres[j]) + " " + (100 * v).toFixed(1) + "%")
             .join(", ") +
           "."
         : "");
-    if (move && matchMedia("(max-width:700px)").matches) {
-      $("heading").focus();
-      $("result").scrollIntoView();
-    }
+    $("profileStatus").textContent = "";
+    renderHome();
+    renderGenres();
+    navigate("explore");
   }
+  function showGenre(genre, instrument = null) {
+    load({
+      g: d.genres.indexOf(genre),
+      i: instrument ? [d.instruments.indexOf(instrument)] : [],
+      strict: !!instrument,
+    });
+    draw(genre === "Hip Hop" ? "Hip hop" : tr(genre));
+  }
+  function renderGenres() {
+    const q = norm($("genreSearch").value);
+    const buttons = browserGenres
+      .filter((o) => [o.label, o.genre].some((s) => norm(s).includes(q)))
+      .map((o) => {
+        const b = node("button", o.label);
+        b.setAttribute("aria-pressed", String(latestProfile?.g === o.index));
+        b.onclick = () => showGenre(o.genre);
+        return b;
+      });
+    $("genreBrowser").replaceChildren(
+      ...(buttons.length
+        ? buttons
+        : [node("p", "Ningún género coincide con esa búsqueda.")]),
+    );
+  }
+  $("genreSearch").oninput = renderGenres;
+  $("allGenres").onclick = () => {
+    navigate("explore");
+    $("genreSearch").focus();
+    $("genreSearch").scrollIntoView({ block: "center" });
+  };
+  document
+    .querySelectorAll("[data-genre]")
+    .forEach(
+      (b) =>
+        (b.onclick = () =>
+          showGenre(
+            b.dataset.genre,
+            { "Hip Hop": "Bass", Jazz: "Piano", Rock: "Guitar" }[
+              b.dataset.genre
+            ],
+          )),
+    );
+  $("discover").onclick = () => {
+    load({ g: d.genres.indexOf("Ambient"), m: [d.moods.indexOf("Relaxed")] });
+    draw("Sesión nocturna");
+  };
+  $("listenable").onclick = () => {
+    load({ i: [d.instruments.indexOf("Bass")], previews: true });
+    draw("Muestras con bajo");
+  };
   opts("genre", d.genres, "Cualquier género");
   chips();
   for (const id of ["genre", "bpm", "strict", "samplesOnly"])
@@ -293,17 +437,16 @@
   };
   $("reset").onclick = () => {
     load({});
-    draw(false);
-  };
-  $("preset").onclick = () => {
-    load({
-      g: d.genres.indexOf("Hip Hop"),
-      m: [],
-      i: [d.instruments.indexOf("Bass")],
-      bpm: null,
-      strict: true,
-    });
-    draw();
+    latestRows = [];
+    latestProfile = null;
+    $("list").replaceChildren();
+    $("heading").textContent = "Explorar";
+    $("status").textContent =
+      "Elige un género o ajusta tu perfil para empezar.";
+    $("explain").hidden = true;
+    $("profileStatus").textContent = "Perfil borrado.";
+    renderHome();
+    renderGenres();
   };
   const norm = (s) =>
     s
@@ -424,4 +567,8 @@
       draw();
     }
   };
+  $("status").textContent = "Elige un género o ajusta tu perfil para empezar.";
+  renderHome();
+  renderGenres();
+  navigate(location.hash.slice(1) || "home", false);
 })();

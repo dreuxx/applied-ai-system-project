@@ -29,89 +29,152 @@ try {
     assert.ok(v, msg);
     checks.push(msg);
   };
-  await p.goto(new URL("../CueCrate_Movil.html", import.meta.url).href);
-  ok((await p.locator("article").count()) === 0, "empty profile");
-  await p.locator("#preset").click();
-  ok(
-    (await p.locator("article h3").first().innerText()) === "Big Plans Remix",
-    "hip hop profile",
+  const view = (id) => p.locator('nav [data-view="' + id + '"]').click();
+  const first = () => p.locator("#list .trackRow").first();
+  const profileCSV = fileURLToPath(
+    new URL("../data/preferencias.csv", import.meta.url),
   );
-  ok((await p.locator("article").count()) === 5, "five results");
+  await p.goto(new URL("../CueCrate_Movil.html", import.meta.url).href);
+  ok(
+    (await p.locator("#home").isVisible()) &&
+      (await p.locator("#homeTracks button").count()) === 3,
+    "editorial home with real tracks",
+  );
+  ok(
+    await p
+      .locator("#home img")
+      .evaluateAll((imgs) =>
+        imgs.every((i) => i.complete && i.naturalWidth > 0),
+      ),
+    "seven offline images decoded",
+  );
+  if (process.env.SCREENSHOT_DIR)
+    await p.screenshot({ path: process.env.SCREENSHOT_DIR + "/mobile.png" });
+  await p.locator("#discover").click();
+  ok(
+    (await p.locator("#heading").innerText()) === "Sesión nocturna" &&
+      (await p.locator("#list button").count()) > 0,
+    "hero opens a ranked session",
+  );
+  await view("home");
+  await p.locator("#preset").click();
+  ok((await first().innerText()).includes("Big Plans Remix"), "hip hop tile");
+  ok((await p.locator("#list button").count()) === 5, "five recommendations");
   await p.locator("#explain summary").click();
   ok(
     (await p.locator("#math").innerText()).includes("%"),
-    "classifier output visible",
+    "classifier visible",
   );
-  await p.locator("form summary").click();
-  await p
-    .locator("#file")
-    .setInputFiles(
-      fileURLToPath(new URL("../data/preferencias.csv", import.meta.url)),
-    );
-  await p.locator("#imported").waitFor();
-  ok((await p.locator("#saved option").count()) === 7, "local CSV import");
+  await first().click();
   ok(
-    (await p.locator("article").first().innerText()).includes("Kellee Maize"),
-    "correct Jamendo artist",
+    (await p.locator("#trackDialog").isVisible()) &&
+      (await p.locator("#trackContent .artist").innerText()) === "Kellee Maize",
+    "credited artist in track sheet",
+  );
+  await p.locator("#trackContent summary").click();
+  ok(
+    (await p.locator("#trackContent details").innerText()).includes(
+      "instrumentos",
+    ),
+    "score breakdown",
   );
   ok(
-    (await p.locator("article a").first().getAttribute("href")).startsWith(
+    (await p.locator("#trackContent a").getAttribute("href")).startsWith(
       "https://www.jamendo.com/track/",
     ),
-    "Jamendo source URL",
+    "Jamendo source link",
   );
-  await p.locator("#saved").selectOption("6");
-  await p.locator("#apply").click();
+  await p.locator("#dismiss").click();
+  await view("profile");
+  await p.locator("form summary").click();
+  await p.locator("#file").setInputFiles(profileCSV);
+  await p.locator("#imported").waitFor();
   ok(
-    (await p.locator("article").first().innerText()).includes("Le Zaarth"),
-    "multi-artist CSV profile",
+    (await p.locator("#saved option").count()) === 7,
+    "seven local CSV profiles",
   );
-  await p.locator("#saved").selectOption("1");
-  await p.locator("#apply").click();
-  ok(
-    (await p.locator("article h3").first().innerText()) === "Neolith",
-    "rock profile changes first result",
-  );
-  await p.locator("#saved").selectOption("3");
-  await p.locator("#apply").click();
-  const audio = p.locator("audio").first();
-  await audio.evaluate(async (a) => {
+  for (const [idx, title] of [
+    ["6", "Condition Humaine"],
+    ["1", "Neolith"],
+    ["3", "C-Funk"],
+  ]) {
+    await p.locator("#saved").selectOption(idx);
+    await p.locator("#apply").click();
+    ok((await first().innerText()).includes(title), "CSV recommends " + title);
+    if (idx !== "3") await view("profile");
+  }
+  await first().click();
+  const media = p.locator("#trackContent audio");
+  await media.evaluate(async (a) => {
     a.muted = true;
     await a.play();
   });
   await p.waitForFunction(
-    () => document.querySelector("audio")?.currentTime > 0.15,
+    () => document.querySelector("dialog audio")?.currentTime > 0.1,
   );
   ok(
-    await audio.evaluate((a) => a.duration > 6 && a.duration < 8),
-    "offline audio plays",
+    await media.evaluate((a) => a.duration > 6 && a.duration < 8),
+    "local audio playback",
   );
-  await p.getByText("Usar como perfil", { exact: true }).first().click();
+  await p.getByText("Usar como perfil", { exact: true }).click();
   ok(
-    !(await p.locator("article h3").allInnerTexts()).includes("C-Funk"),
-    "seed excluded",
+    !(await p.locator("#list").innerText()).includes("C-Funk"),
+    "seed exclusion",
   );
-  await p.locator("#file").setInputFiles({
-    name: "bad.csv",
-    mimeType: "text/csv",
-    buffer: Buffer.from("bad\nx"),
-  });
+  await view("profile");
+  await p
+    .locator("#file")
+    .setInputFiles({
+      name: "bad.csv",
+      mimeType: "text/csv",
+      buffer: Buffer.from("bad\nx"),
+    });
   await p.waitForFunction(() =>
     document.querySelector("#csvStatus").textContent.includes("encabezado"),
   );
-  ok(!(await p.locator("#imported").isVisible()), "invalid CSV");
+  ok(!(await p.locator("#imported").isVisible()), "invalid CSV handled");
   await p.locator("#reset").click();
-  ok((await p.locator("article").count()) === 0, "reset");
-  await p.locator("#preset").click();
-  for (const w of [320, 390, 768]) {
+  await view("home");
+  ok(
+    (await p.locator("#homeTitle").innerText()) === "En rotación",
+    "reset restores editorial home",
+  );
+  await p.locator("#allGenres").click();
+  ok(
+    (await p.locator("#genreBrowser button").count()) === 103,
+    "full genre browser",
+  );
+  await p.locator("#genreSearch").fill("reggae");
+  await p.locator("#genreBrowser button").click();
+  ok(
+    (await p.locator("#heading").innerText()) === "Reggae",
+    "genre search applies filter",
+  );
+  await p.locator("#listenable").click();
+  await first().click();
+  ok((await p.locator("dialog audio").count()) === 1, "headphones shortcut");
+  await p.keyboard.press("Escape");
+  ok(!(await p.locator("#trackDialog").isVisible()), "keyboard dismiss");
+  await view("profile");
+  await p.locator("#reset").click();
+  await view("home");
+  for (const w of [320, 390, 768, 1280]) {
     await p.setViewportSize({ width: w, height: 844 });
-    ok(
-      await p.evaluate(
-        () => document.documentElement.scrollWidth <= innerWidth,
-      ),
-      "layout " + w,
-    );
+    for (const id of ["home", "explore", "profile"]) {
+      await view(id);
+      ok(
+        await p.evaluate(
+          () =>
+            document.documentElement.scrollWidth <=
+            document.documentElement.clientWidth,
+        ),
+        "layout " + id + " " + w,
+      );
+    }
   }
+  await view("home");
+  if (process.env.SCREENSHOT_DIR)
+    await p.screenshot({ path: process.env.SCREENSHOT_DIR + "/desktop.png" });
   ok(network.length === 0, "zero network requests");
   ok(errors.length === 0, "zero JS errors");
   console.log(

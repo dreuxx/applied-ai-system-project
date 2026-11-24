@@ -8,7 +8,9 @@ The Module 3 **Music Recommender Simulation** ranked 18 hand-written tracks from
 
 ## Try it
 
-Tap **Probar hip hop con bajo**. The first result is *Big Plans Remix* by Kellee Maize. Open its score, then select **Usar como perfil** to find neighbors that share its genre vector. For reggae, import [preferencias.csv](data/preferencias.csv) and choose **Reggae con guitarra**. Choose **Escuchar sin internet** to hear a locally bundled excerpt.
+Start on **Inicio** and tap the **Hip hop** sleeve to run a hip-hop/bass profile. Tap *Big Plans Remix* by Kellee Maize to see its score, then **Usar como perfil** to find neighbors. **Explorar** lets you search 103 genres. **Perfil** contains the preference controls and the [CSV importer](data/preferencias.csv). The headphones button opens a selection with offline audio. Tap a track to play its excerpt.
+
+[Design reference](assets/design-reference.webp) · [Implemented mobile screen](assets/mobile-home.png). The original editorial artwork is bundled locally. The discovery screen starts with three editorial picks. After a search, the home list shows the listener’s actual recommendations.
 
 ## Catalog and features
 
@@ -85,7 +87,7 @@ Empty: empty; Urban + Harpsichord (strict): no_match
 
 The classifier experiment fits 28,099 tracks from 1,870 artist IDs and evaluates 5,975 tracks from 447 disjoint artist IDs. Tracks without any non-genre signal are excluded from classifier fitting and evaluation. A prediction is a hit if it matches any annotated genre. Top-1 hits were **3,025/5,975 (50.6%)** and top-3 hits were **4,268/5,975 (71.4%)**. Always predicting the most frequent training genre gave **1,912/5,975 (32.0%)**. The shipped classifier is refit on all 34,074 usable tracks. [Held-out predictions](evidence/holdout.csv) · [Aggregate counts](evidence/classifier.json).
 
-On 19 scripted preference profiles both direct and model-assisted ranking met the metadata criteria in 57/57 top-three positions. Adding the model changed four first choices. The harness also checked all 103 genre filters, seeded recommendations, bounds, empty input and impossible requests. The [browser test](evidence/browser.json) passed 18 checks in offline Chromium with touch emulation, including artist display, Jamendo URLs, CSV import, embedded playback, three viewport widths and zero network requests. Physical phones and listener satisfaction remain untested. [Profile-level outcomes](evidence/ranking.json).
+On 19 scripted preference profiles both direct and model-assisted ranking met the metadata criteria in 57/57 top-three positions. Adding the model changed four first choices. The harness also checked all 103 genre filters, seeded recommendations, bounds, empty input and impossible requests. The [browser test](evidence/browser.json) passed 35 checks in offline Chromium with touch emulation, including artist display, Jamendo URLs, CSV import, embedded playback, four viewport widths and zero network requests. Physical phones and listener satisfaction remain untested. [Profile-level outcomes](evidence/ranking.json).
 
 ## Reflection and portfolio
 

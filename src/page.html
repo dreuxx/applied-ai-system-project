@@ -1,11 +1,260 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; media-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'"><title>CueCrate · Música para ti</title><style>
-*{box-sizing:border-box}body{margin:0;background:#f6f4ee;color:#23392f;font:16px/1.5 system-ui,sans-serif}header,main{max-width:1050px;margin:auto;padding:0 24px}header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #bac9be;height:64px}header strong{font-size:25px;letter-spacing:-1px}header small{color:#486754}h1{font:normal clamp(42px,6vw,68px)/1.1 Georgia,serif;margin:32px 0 10px}h2{font-size:22px;margin:0 0 14px}h3{margin:0}p{color:#415a4d}main>p{max-width:660px}.grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:28px;margin:26px 0}form{background:#fffcf6;padding:20px;border:1px solid #c2d0c6;border-radius:12px;align-self:start}label{display:block;margin:9px 0 4px;font-size:14px;font-weight:600}select,input[type=number],input[type=file]{min-height:42px;width:100%;max-width:100%;font:inherit}select,input[type=number]{border:1px solid #9aada0;border-radius:6px;background:white;padding:7px;color:#23392f}input[type=checkbox]{width:17px;height:17px;accent-color:#214a3b;vertical-align:middle}.chip{margin:6px 4px 2px 0;padding:5px 10px;background:#dfebdd}.main{width:100%;background:#214a3b;color:white;padding:13px;margin-top:17px}button{font:inherit;font-weight:600;cursor:pointer;border:none;border-radius:6px;color:#214a3b}.link{background:none;text-decoration:underline;padding:10px 4px;font-size:14px}.toolbar{display:flex;justify-content:space-between;gap:8px}.card{border-top:1px solid #b9c8bb;padding:16px 0}.head{display:flex;justify-content:space-between;gap:10px}.head small{white-space:nowrap}.card p{margin:5px 0;font-size:14px}audio{display:block;max-width:100%;margin:8px 0;height:34px}summary{cursor:pointer;color:#24503d}details{padding:8px 0;font-size:14px}a{color:#24503d}footer{margin:36px 0;padding:15px 0;border-top:1px solid #c2d0c6;font-size:13px}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #b95531}[hidden]{display:none!important}@media(max-width:700px){header,main{padding:0 16px}.grid{display:block}#result{margin-top:25px}form{padding:16px}}
-</style></head><body><header><strong>CueCrate.</strong><small>Modo sin conexión</small></header><main><h1>Música para ti</h1><p id="catalogInfo"></p><noscript>Abre el archivo en un navegador que ejecute JavaScript.</noscript><div class="grid"><form id="form"><h2>Tu perfil musical</h2>
-<label for="genre">Género</label><select id="genre"></select><label for="mood">Ánimo</label><select id="mood"></select><div id="mchips"></div><label for="instrument">Instrumentos</label><select id="instrument"></select><div id="ichips"></div>
-<label for="bpm">Tempo opcional (BPM)</label><input type="number" id="bpm" min="20" max="240" placeholder="Cualquier tempo"><small>MTG-Jamendo no incluye BPM. Al elegir un tempo se comparan solo pistas con BPM conocidos.</small>
-<label><input id="strict" type="checkbox"> Exigir todas las etiquetas</label><label><input id="samplesOnly" type="checkbox"> Solo con muestra sin conexión (28 pistas)</label>
-<button class="main" type="submit">Recomendar música</button><div class="toolbar"><button class="link" type="button" id="preset">Probar hip hop con bajo</button><button class="link" type="button" id="reset">Borrar perfil</button></div>
-<details><summary>Cargar preferencias desde CSV</summary><label for="file">Archivo preferencias.csv</label><input id="file" type="file" accept=".csv,text/csv"><p role="status" id="csvStatus"></p><div id="imported" hidden><label for="saved">Perfil guardado</label><select id="saved"></select><button type="button" id="apply" class="link">Usar este perfil</button></div></details></form>
-<section id="result"><h2 tabindex="-1" id="heading">Tus recomendaciones</h2><p id="status" role="status">Elige un género, ánimo, instrumento o tempo para empezar.</p><div id="list"></div><details hidden id="explain"><summary>Cómo calculó el modelo el resultado</summary><p id="math"></p></details></section></div>
-<footer>Metadatos adaptados de <a href="https://mtg.github.io/mtg-jamendo-dataset/" target="_blank" rel="noopener noreferrer">MTG-Jamendo</a> (Music Technology Group, <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a>). Muestras de Kevin MacLeod (Incompetech), <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. Las 28 muestras son extractos mono de siete segundos. Los enlaces al autor y la licencia requieren internet. El perfil permanece en memoria mientras la página está abierta.</footer></main>
-<script id="model" type="application/json">__MODEL__</script><script id="audio" type="application/json">__AUDIO__</script><script>/*ENGINE*/</script><script>/*UI*/</script></body></html>
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#130e17" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; media-src data:; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>CueCrate · Música para ti</title>
+    <style>
+      /*STYLE*/
+    </style>
+  </head>
+  <body>
+    <svg class="sprites" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <symbol id="logo" viewBox="0 0 38 32">
+        <path
+          fill="currentColor"
+          fill-rule="evenodd"
+          d="M19 1C9 1 2 4.4 2 9s7 8 17 8 17-3.4 17-8S29 1 19 1zm0 6.2c2 0 3.7.8 3.7 1.8S21 10.8 19 10.8s-3.7-.8-3.7-1.8S17 7.2 19 7.2zM2 14c6.5 6.8 27.5 6.8 34 0v3.4C30.5 25 7.5 25 2 17.4zm0 7c6.5 6.8 27.5 6.8 34 0v3.4C30.5 32 7.5 32 2 24.4z"
+        />
+      </symbol>
+      <symbol id="ico-home" viewBox="0 0 24 24">
+        <path d="m3 10 9-7 9 7v10h-6v-6H9v6H3z" />
+      </symbol>
+      <symbol id="ico-search" viewBox="0 0 24 24">
+        <circle cx="10.5" cy="10.5" r="7" />
+        <path d="m16 16 5 5" />
+      </symbol>
+      <symbol id="ico-user" viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4 21c0-9 16-9 16 0" />
+      </symbol>
+      <symbol id="ico-audio" viewBox="0 0 24 24">
+        <path d="M3 16v-4a9 9 0 0 1 18 0v4" />
+        <rect x="3" y="12" width="4" height="8" rx="1.6" />
+        <rect x="17" y="12" width="4" height="8" rx="1.6" />
+      </symbol>
+      <symbol id="ico-next" viewBox="0 0 24 24">
+        <path d="M4 12h15m-6-6 6 6-6 6" />
+      </symbol>
+    </svg>
+    <header>
+      <div class="bar">
+        <button class="brand" data-view="home" aria-label="CueCrate, inicio">
+          <svg aria-hidden="true"><use href="#logo" /></svg>CueCrate<span
+            >.</span
+          >
+        </button>
+        <nav aria-label="Secciones">
+          <button data-view="home" aria-current="page">
+            <svg><use href="#ico-home" /></svg>Inicio</button
+          ><button data-view="explore">
+            <svg><use href="#ico-search" /></svg>Explorar</button
+          ><button data-view="profile">
+            <svg><use href="#ico-user" /></svg>Perfil
+          </button>
+        </nav>
+        <button
+          class="audioBtn"
+          id="listenable"
+          aria-label="Explorar música con muestra sin conexión"
+          title="Muestras sin conexión"
+        >
+          <svg class="icon"><use href="#ico-audio" /></svg>
+        </button>
+      </div>
+    </header>
+    <main>
+      <noscript
+        >Abre este archivo en un navegador con JavaScript para usar
+        CueCrate.</noscript
+      >
+      <section id="home" class="screen" aria-label="Inicio">
+        <div class="hero">
+          <img src="__IMG_concert__" alt="" fetchpriority="high" />
+          <div class="heroBody">
+            <p>Selección de CueCrate</p>
+            <h1 tabindex="-1">Sesión<br />nocturna</h1>
+            <button class="primary" id="discover">
+              <span aria-hidden="true">▸</span> Descubrir
+            </button>
+          </div>
+        </div>
+        <div class="homeCols">
+          <section>
+            <div class="sectionHead">
+              <h2>Explorar géneros</h2>
+              <button class="textLink" id="allGenres">
+                Ver todos <span aria-hidden="true">›</span>
+              </button>
+            </div>
+            <div class="tiles">
+              <button
+                class="tile"
+                data-genre="Hip Hop"
+                id="preset"
+                aria-label="Hip hop con bajo"
+              >
+                <img src="__IMG_hiphop__" alt="" /><span>Hip hop</span></button
+              ><button
+                class="tile"
+                data-genre="Jazz"
+                aria-label="Jazz con piano"
+              >
+                <img src="__IMG_jazz__" alt="" /><span>Jazz</span></button
+              ><button
+                class="tile"
+                data-genre="Rock"
+                aria-label="Rock con guitarra"
+              >
+                <img src="__IMG_rock__" alt="" /><span>Rock</span>
+              </button>
+            </div>
+          </section>
+          <section>
+            <div class="sectionHead"><h2 id="homeTitle">En rotación</h2></div>
+            <div id="homeTracks" class="tracks"></div>
+          </section>
+        </div>
+      </section>
+      <section id="explore" class="screen" aria-label="Explorar" hidden>
+        <p class="eyebrow">CueCrate / Explorar</p>
+        <h1 id="heading" tabindex="-1">Explorar</h1>
+        <div class="rowHead">
+          <p id="status" role="status"></p>
+          <button class="outline" data-view="profile">Ajustar perfil</button>
+        </div>
+        <div id="list" class="tracks results"></div>
+        <details hidden id="explain">
+          <summary>Cómo calculó el modelo el resultado</summary>
+          <p id="math"></p>
+        </details>
+        <div class="sectionHead"><h2>Todos los géneros</h2></div>
+        <label class="sr" for="genreSearch">Buscar género</label
+        ><input id="genreSearch" type="search" placeholder="Buscar género…" />
+        <div id="genreBrowser" class="genreBrowser"></div>
+      </section>
+      <section id="profile" class="screen" aria-label="Perfil" hidden>
+        <p class="eyebrow">CueCrate / Perfil</p>
+        <h1 tabindex="-1">Tu perfil musical</h1>
+        <form id="form">
+          <div class="fields">
+            <div>
+              <label for="genre">Género</label
+              ><select id="genre"></select>
+            </div>
+            <div>
+              <label for="mood">Ánimo</label
+              ><select id="mood"></select>
+              <div id="mchips"></div>
+            </div>
+            <div>
+              <label for="instrument">Instrumentos</label
+              ><select id="instrument"></select>
+              <div id="ichips"></div>
+            </div>
+            <div>
+              <label for="bpm">Tempo opcional (BPM)</label
+              ><input
+                type="number"
+                id="bpm"
+                min="20"
+                max="240"
+                placeholder="Cualquier tempo"
+              /><small
+                >El tempo limita la búsqueda a pistas con BPM conocidos.</small
+              >
+            </div>
+          </div>
+          <label class="toggle"
+            ><input id="strict" type="checkbox" />Exigir todas las
+            etiquetas</label
+          ><label class="toggle"
+            ><input id="samplesOnly" type="checkbox" />Solo con muestra sin
+            conexión</label
+          >
+          <div class="actions">
+            <button class="primary" type="submit">Recomendar música</button
+            ><button class="outline" type="button" id="reset">
+              Borrar perfil
+            </button>
+          </div>
+          <details>
+            <summary>Cargar preferencias desde CSV</summary>
+            <label for="file">Archivo preferencias.csv</label
+            ><input id="file" type="file" accept=".csv,text/csv" />
+            <p role="status" id="csvStatus"></p>
+            <div id="imported" hidden>
+              <label for="saved">Perfil guardado</label
+              ><select id="saved"></select
+              ><button type="button" id="apply" class="primary">
+                Usar este perfil
+              </button>
+            </div>
+          </details>
+          <p id="profileStatus" role="status"></p>
+        </form>
+        <details class="credits">
+          <summary>Catálogo y créditos</summary>
+          <p id="catalogInfo"></p>
+          <p>
+            Metadatos de
+            <a
+              href="https://mtg.github.io/mtg-jamendo-dataset/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >MTG-Jamendo</a
+            >
+            (Music Technology Group,
+            <a
+              href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >CC BY-NC-SA 4.0</a
+            >). Las 28 muestras son extractos mono de siete segundos de Kevin
+            MacLeod, Incompetech,
+            <a
+              href="https://creativecommons.org/licenses/by/4.0/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >CC BY 4.0</a
+            >.
+          </p>
+          <p>
+            Las imágenes son ilustraciones editoriales generadas para CueCrate.
+            Las fichas externas requieren internet. El perfil permanece en
+            memoria.
+          </p>
+        </details>
+      </section>
+    </main>
+    <dialog id="trackDialog" aria-labelledby="trackTitle">
+      <div class="sheet">
+        <button class="close" aria-label="Cerrar ficha" id="dismiss">×</button>
+        <div id="trackContent"></div>
+      </div>
+    </dialog>
+    <script id="model" type="application/json">
+      __MODEL__
+    </script>
+    <script id="audio" type="application/json">
+      __AUDIO__
+    </script>
+    <script id="art" type="application/json">
+      __ART__
+    </script>
+    <script>
+      /*ENGINE*/
+    </script>
+    <script>
+      /*UI*/
+    </script>
+  </body>
+</html>
