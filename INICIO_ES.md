@@ -22,6 +22,7 @@ Abre la URL que muestra Expo, normalmente **http://localhost:8081**. Esa misma d
 3. En **Perfil**, usa **Importar preferencias CSV** y selecciona `data/preferencias.csv`. El perfil **Reggae con guitarra** recomienda *Condition Humaine*. Puedes regresar a Perfil para aplicar otro perfil del mismo archivo.
 4. Activa **Calcular este perfil con la API REST** y pulsa **Recomendar música** para enviar esa consulta al servidor. El comportamiento inicial es calcularla en el dispositivo. El servidor y la app usan el mismo modelo y los mismos pesos.
 5. Pulsa el icono de auriculares, abre una canción y pulsa **Reproducir muestra**. Hay 28 fragmentos de siete segundos.
+6. Pulsa **ES EN** en la cabecera, o **Idioma** en Perfil, para cambiar toda la interfaz entre español e inglés. El navegador recuerda la elección. Un enlace terminado en `/?lang=en` abre la app en inglés.
 
 Pruebas automáticas y versión de producción:
 
@@ -55,7 +56,7 @@ curl -X POST http://localhost:8081/api/recommendations \
   -d '{"genre":"Hip Hop","instruments":["Bass"],"strict":true}'
 ```
 
-La primera consulta devuelve `{"status":"ok","tracks":56656,"genres":103}`. La primera canción de la segunda es *Big Plans Remix*. Un género desconocido devuelve HTTP 400; un perfil vacío devuelve una lista vacía.
+La primera consulta devuelve `{"status":"ok","tracks":56656,"genres":103}`. La primera canción de la segunda es *Big Plans Remix*. Un género desconocido devuelve HTTP 400; un perfil vacío devuelve una lista vacía. Los mensajes de error llegan en español, o en inglés si la petición envía `Accept-Language: en`.
 
 ## 4. Spotify opcional
 

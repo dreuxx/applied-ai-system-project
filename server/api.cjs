@@ -6,6 +6,7 @@ const {
   recommend,
 } = require("../app/catalog");
 const { tr, norm } = require("../app/preferences");
+const { message, pick } = require("../app/i18n");
 const spotify = require("./spotify.cjs").spotifyLookup();
 const json = (body, status = 200, headers = {}) =>
   Response.json(body, {
@@ -60,7 +61,19 @@ function profile(body) {
     seed: body.seed ?? null,
   };
 }
+// Error text follows Accept-Language: English when listed first, Spanish otherwise.
 async function handle(req) {
+  const lang = pick(req.headers.get("accept-language"));
+  const response = await route(req);
+  if (lang === "es" || response.status < 400) return response;
+  const body = await response.json();
+  return json(
+    { ...body, error: message(lang, body.error) },
+    response.status,
+    Object.fromEntries(response.headers),
+  );
+}
+async function route(req) {
   const url = new URL(req.url),
     path = url.pathname,
     method = req.method;

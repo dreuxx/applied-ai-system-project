@@ -10,7 +10,8 @@
     "CSV import",
     "local audio playback",
     "personalized home",
-    "responsive widths 320/390/1280"
+    "responsive widths 320/390/1280",
+    "Spanish/English switch, saved choice and ?lang=en"
   ],
   "offlineReloadSearchAndAudio": false,
   "pageErrors": []

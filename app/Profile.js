@@ -4,6 +4,7 @@ import * as DocumentPicker from "expo-document-picker";
 import { File } from "expo-file-system";
 import { model } from "./catalog";
 import { parseCSV, tr, norm } from "./preferences";
+import { useLang } from "./lang";
 import { T, Button, Input, Sheet, st, c } from "./design";
 export const blank = () => ({
   g: null,
@@ -15,9 +16,9 @@ export const blank = () => ({
   seed: null,
 });
 const fields = {
-  g: ["Género", model.genres],
-  m: ["Ánimo", model.moods],
-  i: ["Instrumentos", model.instruments],
+  g: model.genres,
+  m: model.moods,
+  i: model.instruments,
 };
 export default function Profile({
   p,
@@ -29,14 +30,15 @@ export default function Profile({
   profiles,
   setProfiles,
 }) {
+  const { lang, choose, t, label, message } = useLang();
   const [field, setField] = useState(null),
     [query, setQuery] = useState(""),
-    [message, setMessage] = useState("");
+    [notice, setNotice] = useState("");
   function change(k, v) {
     setP({ ...p, [k]: v, seed: null });
   }
   async function importCSV() {
-    setMessage("");
+    setNotice("");
     try {
       const f = await DocumentPicker.getDocumentAsync({
         type: "*/*",
@@ -54,17 +56,17 @@ export default function Profile({
       setProfiles(parseCSV(text));
     } catch (e) {
       setProfiles([]);
-      setMessage(e.message);
+      setNotice(e.message);
     }
   }
   return (
     <View style={st.section}>
-      <T style={st.h1}>Tu perfil musical</T>
-      {Object.entries(fields).map(([k, [name, labels]]) => (
+      <T style={st.h1}>{t("profileTitle")}</T>
+      {Object.entries(fields).map(([k, labels]) => (
         <View key={k} style={{ gap: 6 }}>
-          <T>{name}</T>
+          <T>{t("field." + k)}</T>
           <Button
-            label={"Elegir " + name}
+            label={t("chooseLabel." + k)}
             onPress={() => {
               setField(k);
               setQuery("");
@@ -72,74 +74,85 @@ export default function Profile({
           >
             {k === "g"
               ? p.g === null
-                ? "Cualquier género"
-                : tr(labels[p.g])
+                ? t("anyGenre")
+                : label(labels[p.g])
               : p[k].length
-                ? p[k].map((j) => tr(labels[j])).join(" · ")
-                : "Elegir " + name.toLowerCase()}
+                ? p[k].map((j) => label(labels[j])).join(" · ")
+                : t("choose." + k)}
           </Button>
         </View>
       ))}
-      <T>Tempo opcional (BPM)</T>
+      <T>{t("tempo")}</T>
       <Input
-        accessibilityLabel="Tempo opcional"
+        accessibilityLabel={t("tempoLabel")}
         keyboardType="number-pad"
-        placeholder="Cualquier tempo"
+        placeholder={t("anyTempo")}
         value={String(p.bpm ?? "")}
         onChangeText={(v) => change("bpm", v === "" ? null : v)}
       />
-      <T style={st.small}>
-        Solo las pistas con BPM conocidos pueden coincidir con un tempo.
-      </T>
+      <T style={st.small}>{t("tempoHelp")}</T>
       {[
-        [p.strict, (v) => change("strict", v), "Exigir todas las etiquetas"],
-        [p.previews, (v) => change("previews", v), "Solo con muestra"],
-        [useRest, setUseRest, "Calcular este perfil con la API REST"],
-      ].map(([value, fn, label]) => (
-        <View key={label} style={st.between}>
-          <T style={{ flex: 1 }}>{label}</T>
+        [p.strict, (v) => change("strict", v), "strict"],
+        [p.previews, (v) => change("previews", v), "previews"],
+        [useRest, setUseRest, "useRest"],
+      ].map(([value, fn, name]) => (
+        <View key={name} style={st.between}>
+          <T style={{ flex: 1 }}>{t(name)}</T>
           <Switch
-            accessibilityLabel={label}
+            accessibilityLabel={t(name)}
             value={value}
             onValueChange={fn}
             trackColor={{ true: c.lime, false: c.line }}
           />
         </View>
       ))}
-      <T style={st.small}>
-        {useRest
-          ? "Al recomendar se envían las preferencias al servidor configurado."
-          : "El modelo calcula tu perfil en este dispositivo."}
-      </T>
+      <T style={st.small}>{t(useRest ? "restOn" : "restOff")}</T>
       <View style={st.wrap}>
         <Button primary onPress={() => run(p)}>
-          Recomendar música
+          {t("recommend")}
         </Button>
         <Button
           onPress={() => {
             clear();
-            setMessage("Perfil borrado.");
+            setNotice("Perfil borrado.");
           }}
         >
-          Borrar perfil
+          {t("clear")}
         </Button>
       </View>
-      <Button onPress={importCSV}>Importar preferencias CSV</Button>
+      <Button onPress={importCSV}>{t("importCsv")}</Button>
       {profiles.map((row, j) => (
-        <Button key={j} onPress={() => run({ ...blank(), ...row }, row.name)}>
+        <Button
+          key={j}
+          onPress={() => run({ ...blank(), ...row }, { text: row.name })}
+        >
           {row.name}
         </Button>
       ))}
-      {message ? <T>{message}</T> : null}
-      <T style={st.small}>
-        Catálogo de MTG-Jamendo (CC BY-NC-SA 4.0) e Incompetech. Muestras de
-        Kevin MacLeod (CC BY 4.0). Arte editorial de CueCrate.
-      </T>
+      {notice ? <T>{message(notice)}</T> : null}
+      <View style={st.between}>
+        <T style={{ flex: 1 }}>{t("language")}</T>
+        <View style={st.wrap}>
+          {[
+            ["es", "Español"],
+            ["en", "English"],
+          ].map(([code, name]) => (
+            <Button
+              key={code}
+              selected={lang === code}
+              onPress={() => choose(code)}
+            >
+              {name}
+            </Button>
+          ))}
+        </View>
+      </View>
+      <T style={st.small}>{t("credits")}</T>
       {field && (
-        <Sheet title={fields[field][0]} onClose={() => setField(null)}>
+        <Sheet title={t("field." + field)} onClose={() => setField(null)}>
           <Input
-            accessibilityLabel="Filtrar opciones"
-            placeholder="Filtrar opciones…"
+            accessibilityLabel={t("filter")}
+            placeholder={t("filterHint")}
             value={query}
             onChangeText={setQuery}
           />
@@ -151,10 +164,10 @@ export default function Profile({
                   setField(null);
                 }}
               >
-                Cualquier género
+                {t("anyGenre")}
               </Button>
             )}
-            {fields[field][1]
+            {fields[field]
               .map((v, j) => ({ v, j }))
               .filter(({ v }) =>
                 [tr(v), v].some((x) => norm(x).includes(norm(query))),
@@ -176,12 +189,12 @@ export default function Profile({
                       );
                   }}
                 >
-                  {tr(v)}
+                  {label(v)}
                 </Button>
               ))}
           </View>
           <Button primary onPress={() => setField(null)}>
-            Listo
+            {t("done")}
           </Button>
         </Sheet>
       )}

@@ -11,7 +11,8 @@ import {
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { model, byId, artist, recommend, searchTracks } from "./catalog";
-import { tr, norm } from "./preferences";
+import { norm } from "./preferences";
+import { LanguageProvider, useLang } from "./lang";
 import { art } from "./media";
 import { api } from "./client";
 import { T, Button, Input, st, c } from "./design";
@@ -27,6 +28,7 @@ const curated = ["track_0521030", "track_0030227", "USUAN1100001"].map(
   (id) => ({ s: byId.get(id) }),
 );
 const sleeves = [art.window, art.rain, art.petals];
+const explore = { k: "h.explore" };
 function Rows({ rows, open }) {
   return (
     <View>
@@ -54,6 +56,7 @@ function Rows({ rows, open }) {
   );
 }
 function CueCrate() {
+  const { lang, choose, t, label, message } = useLang();
   const wide = useWindowDimensions().width >= 760,
     scroll = useRef(null),
     runId = useRef(0),
@@ -64,15 +67,15 @@ function CueCrate() {
     [profiles, setProfiles] = useState([]),
     [item, setItem] = useState(null);
   const [rows, setRows] = useState([]),
-    [heading, setHeading] = useState("Explorar"),
-    [note, setNote] = useState("Elige un género o ajusta tu perfil."),
+    [heading, setHeading] = useState(explore),
+    [note, setNote] = useState(null),
     [prob, setProb] = useState([]),
     [showMath, setMath] = useState(false),
     [applied, setApplied] = useState(null);
   const [genreQuery, setGenreQuery] = useState(""),
     [songQuery, setSongQuery] = useState(""),
     [hits, setHits] = useState([]),
-    [searchNote, setSearchNote] = useState("");
+    [searchNote, setSearchNote] = useState(null);
   const [error, setError] = useState("");
   function navigate(v) {
     if (Platform.OS === "web" && window.location.hash !== "#" + v)
@@ -102,7 +105,7 @@ function CueCrate() {
     });
     return () => sub.remove();
   }, [view]);
-  async function run(input, title = "Tus recomendaciones") {
+  async function run(input, title = { k: "h.recs" }) {
     const id = ++runId.current;
     const profile = {
       ...blank(),
@@ -150,20 +153,15 @@ function CueCrate() {
       setHeading(title);
       setMath(false);
       setProb(result.prob ?? []);
-      setNote(
-        result.status === "empty"
-          ? "Elige un género o ajusta tu perfil."
-          : result.status === "no_match"
-            ? "Sin coincidencias. Prueba otro perfil."
-            : result.rows.length +
-              " recomendaciones entre " +
-              result.eligible +
-              " pistas · " +
-              (rest ? "API REST" : "modelo local"),
-      );
+      setNote({
+        status: result.status,
+        n: result.rows.length,
+        eligible: result.eligible,
+        rest,
+      });
       setSongQuery("");
       setHits([]);
-      setSearchNote("");
+      setSearchNote(null);
       queryId.current++;
       navigate("Explorar");
     } catch (e) {
@@ -178,7 +176,7 @@ function CueCrate() {
         i: instrument ? [model.instruments.indexOf(instrument)] : [],
         strict: !!instrument,
       },
-      tr(v),
+      { genre: v },
     );
   }
   function clear() {
@@ -186,8 +184,8 @@ function CueCrate() {
     setP(blank());
     setRows([]);
     setApplied(null);
-    setHeading("Explorar");
-    setNote("Elige un género o ajusta tu perfil.");
+    setHeading(explore);
+    setNote(null);
     setProb([]);
     setError("");
     clearSearch("");
@@ -197,28 +195,26 @@ function CueCrate() {
       id = ++queryId.current;
     if (!q) {
       setHits([]);
-      setSearchNote("Escribe un título o artista.");
+      setSearchNote({ k: "search.empty" });
       return;
     }
     try {
       const data = await api("/tracks?q=" + encodeURIComponent(q));
       if (id !== queryId.current) return;
       setHits(data.tracks.map((t) => ({ s: byId.get(t.id) })));
-      setSearchNote(data.tracks.length + " resultados · API REST");
+      setSearchNote({ k: "search.rest", n: data.tracks.length });
     } catch {
       if (id !== queryId.current) return;
       const found = searchTracks(q, null);
       setHits(found.map((s) => ({ s })));
-      setSearchNote(
-        found.length + " resultados · catálogo local (API no disponible)",
-      );
+      setSearchNote({ k: "search.local", n: found.length });
     }
   }
   function clearSearch(text) {
     queryId.current++;
     setSongQuery(text);
     setHits([]);
-    setSearchNote("");
+    setSearchNote(null);
   }
   const nav = (
     <View style={wide ? st.wrap : st.nav}>
@@ -227,7 +223,7 @@ function CueCrate() {
           key={v}
           accessibilityRole="button"
           accessibilityState={{ selected: view === v }}
-          accessibilityLabel={v}
+          accessibilityLabel={t("nav." + v)}
           onPress={() => navigate(v)}
           style={[
             st.tab,
@@ -249,20 +245,33 @@ function CueCrate() {
               fontSize: wide ? 14 : 12,
             }}
           >
-            {v}
+            {t("nav." + v)}
           </T>
         </Pressable>
       ))}
     </View>
   );
   const titles = rows.length ? rows.slice(0, 3) : curated;
+  const headingText = heading.genre
+    ? label(heading.genre)
+    : (heading.text ?? t(heading.k));
+  const noteText =
+    !note || note.status === "empty"
+      ? t("note.empty")
+      : note.status === "no_match"
+        ? t("note.none")
+        : t("note.ok", {
+            n: note.n,
+            eligible: note.eligible,
+            via: t(note.rest ? "via.rest" : "via.local"),
+          });
   return (
     <SafeAreaView style={st.root}>
       <StatusBar barStyle="light-content" />
       <View style={[st.frame, st.bar]}>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="CueCrate, inicio"
+          accessibilityLabel={t("logoLabel")}
           onPress={() => navigate("Inicio")}
         >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
@@ -274,26 +283,47 @@ function CueCrate() {
           </View>
         </Pressable>
         {wide && nav}
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Muestras sin conexión"
-          style={{ padding: 10 }}
-          onPress={() =>
-            run(
-              {
-                ...blank(),
-                i: [model.instruments.indexOf("Bass")],
-                previews: true,
-              },
-              "Muestras con bajo",
-            )
-          }
-        >
-          <Image
-            source={require("../assets/icons/ico-audio.png")}
-            style={{ width: 25, height: 25, tintColor: c.text }}
-          />
-        </Pressable>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 2 }}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t("langLabel")}
+            onPress={() => choose(lang === "es" ? "en" : "es")}
+            style={st.lang}
+          >
+            {["es", "en"].map((code) => (
+              <T
+                key={code}
+                style={{
+                  fontSize: 12,
+                  fontWeight: "800",
+                  color: lang === code ? c.lime : c.soft,
+                }}
+              >
+                {code.toUpperCase()}
+              </T>
+            ))}
+          </Pressable>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t("samplesLabel")}
+            style={{ padding: 10 }}
+            onPress={() =>
+              run(
+                {
+                  ...blank(),
+                  i: [model.instruments.indexOf("Bass")],
+                  previews: true,
+                },
+                { k: "h.bass" },
+              )
+            }
+          >
+            <Image
+              source={require("../assets/icons/ico-audio.png")}
+              style={{ width: 25, height: 25, tintColor: c.text }}
+            />
+          </Pressable>
+        </View>
       </View>
       <ScrollView
         ref={scroll}
@@ -307,7 +337,7 @@ function CueCrate() {
               accessibilityRole="alert"
               style={{ color: "#ffbba9", padding: 10 }}
             >
-              {error}
+              {message(error)}
             </T>
           ) : null}
           {view === "Inicio" && (
@@ -329,9 +359,9 @@ function CueCrate() {
                     paddingVertical: 20,
                   }}
                 >
-                  <T>Selección de CueCrate</T>
+                  <T>{t("heroKicker")}</T>
                   <T accessibilityRole="header" style={st.heroTitle}>
-                    Sesión{"\n"}nocturna
+                    {t("heroTitle")}
                   </T>
                   <Button
                     primary
@@ -342,11 +372,11 @@ function CueCrate() {
                           g: model.genres.indexOf("Ambient"),
                           m: [model.moods.indexOf("Relaxed")],
                         },
-                        "Sesión nocturna",
+                        { k: "h.night" },
                       )
                     }
                   >
-                    ▸ Descubrir
+                    {t("discover")}
                   </Button>
                 </View>
               </View>
@@ -358,14 +388,14 @@ function CueCrate() {
               >
                 <View style={[st.section, { flex: 1 }]}>
                   <View style={st.between}>
-                    <T style={st.h2}>Explorar géneros</T>
+                    <T style={st.h2}>{t("exploreGenres")}</T>
                     <Button
                       onPress={() => {
                         setGenreQuery("");
                         navigate("Explorar");
                       }}
                     >
-                      Ver todos
+                      {t("seeAll")}
                     </Button>
                   </View>
                   <View style={{ flexDirection: "row", gap: 8 }}>
@@ -410,7 +440,7 @@ function CueCrate() {
                   </View>
                 </View>
                 <View style={[st.section, { flex: 1 }]}>
-                  <T style={st.h2}>{rows.length ? "Para ti" : "En rotación"}</T>
+                  <T style={st.h2}>{t(rows.length ? "forYou" : "rotation")}</T>
                   <Rows rows={titles} open={setItem} />
                 </View>
               </View>
@@ -419,20 +449,17 @@ function CueCrate() {
           {view === "Explorar" && (
             <View style={{ gap: 12 }}>
               <T accessibilityRole="header" style={st.h1}>
-                {heading}
+                {headingText}
               </T>
-              <T style={st.small}>{note}</T>
-              <Button onPress={() => navigate("Perfil")}>Ajustar perfil</Button>
+              <T style={st.small}>{noteText}</T>
+              <Button onPress={() => navigate("Perfil")}>{t("adjust")}</Button>
               <Rows rows={rows} open={setItem} />
               {rows.length > 0 && (
-                <Button onPress={() => setMath(!showMath)}>
-                  Cómo se calculó
-                </Button>
+                <Button onPress={() => setMath(!showMath)}>{t("how")}</Button>
               )}
               {showMath && (
                 <T style={st.small}>
-                  La puntuación combina las coincidencias de ánimo, instrumentos
-                  y tempo con el modelo de género.{" "}
+                  {t("howText")}{" "}
                   {prob.length > 0
                     ? prob
                         .map((v, j) => [v, j])
@@ -440,7 +467,7 @@ function CueCrate() {
                         .slice(0, 3)
                         .map(
                           ([v, j]) =>
-                            tr(model.genres[j]) +
+                            label(model.genres[j]) +
                             " " +
                             (v * 100).toFixed(1) +
                             "%",
@@ -449,29 +476,33 @@ function CueCrate() {
                     : ""}
                 </T>
               )}
-              <T style={st.h2}>Buscar canciones</T>
+              <T style={st.h2}>{t("searchSongs")}</T>
               <Input
-                accessibilityLabel="Título o artista"
-                placeholder="Título o artista"
+                accessibilityLabel={t("titleOrArtist")}
+                placeholder={t("titleOrArtist")}
                 value={songQuery}
                 onChangeText={clearSearch}
                 onSubmitEditing={search}
                 maxLength={180}
               />
-              <Button onPress={search}>Buscar en el catálogo</Button>
-              {searchNote ? <T style={st.small}>{searchNote}</T> : null}
+              <Button onPress={search}>{t("searchCatalog")}</Button>
+              {searchNote ? (
+                <T style={st.small}>{t(searchNote.k, { n: searchNote.n })}</T>
+              ) : null}
               <Rows rows={hits} open={setItem} />
-              <T style={st.h2}>Todos los géneros</T>
+              <T style={st.h2}>{t("allGenres")}</T>
               <Input
-                accessibilityLabel="Buscar género"
-                placeholder="Buscar género…"
+                accessibilityLabel={t("genreSearch")}
+                placeholder={t("genreSearchHint")}
                 value={genreQuery}
                 onChangeText={setGenreQuery}
               />
               <View style={st.wrap}>
                 {model.genres
                   .filter((v) =>
-                    [v, tr(v)].some((n) => norm(n).includes(norm(genreQuery))),
+                    [v, label(v)].some((n) =>
+                      norm(n).includes(norm(genreQuery)),
+                    ),
                   )
                   .map((v) => (
                     <Button
@@ -479,7 +510,7 @@ function CueCrate() {
                       onPress={() => genre(v)}
                       selected={applied?.g === model.genres.indexOf(v)}
                     >
-                      {tr(v)}
+                      {label(v)}
                     </Button>
                   ))}
               </View>
@@ -518,7 +549,7 @@ function CueCrate() {
                 previews:
                   item.score !== undefined && (applied?.previews ?? false),
               },
-              "Pistas similares",
+              { k: "h.similar" },
             );
           }}
         />
@@ -529,7 +560,9 @@ function CueCrate() {
 export default function App() {
   return (
     <SafeAreaProvider>
-      <CueCrate />
+      <LanguageProvider>
+        <CueCrate />
+      </LanguageProvider>
     </SafeAreaProvider>
   );
 }

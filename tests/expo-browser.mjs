@@ -120,6 +120,23 @@ try {
       ),
     );
   }
+  // The whole interface switches to English, keeps the choice and switches back.
+  await btn("Cambiar idioma a inglés").click();
+  await btn("Home").waitFor();
+  await page.getByText("For you", { exact: true }).waitFor();
+  await btn("Profile").click();
+  await btn("Choose mood").waitFor();
+  await page.reload({ timeout: 120000 });
+  await btn("Recommend music").waitFor({ timeout: 90000 });
+  assert.equal(await page.evaluate(() => document.documentElement.lang), "en");
+  await btn("Switch language to Spanish").click();
+  await btn("Recomendar música").waitFor();
+  await page.goto(base + "/?lang=en#Perfil", { timeout: 120000 });
+  await btn("Recommend music").waitFor({ timeout: 90000 });
+  await btn("Español").click();
+  await btn("Recomendar música").waitFor();
+  assert(!page.url().includes("lang="));
+  await btn("Inicio").click();
   if (!dev) {
     await page.waitForFunction(() =>
       Boolean(navigator.serviceWorker?.controller),
@@ -154,6 +171,7 @@ try {
           "local audio playback",
           "personalized home",
           "responsive widths 320/390/1280",
+          "Spanish/English switch, saved choice and ?lang=en",
         ],
         offlineReloadSearchAndAudio: !dev,
         pageErrors: errors,

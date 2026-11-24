@@ -14,7 +14,7 @@
     "api": "node --env-file-if-exists=.env server/local.cjs",
     "build": "expo export --platform web && node tools/offline-web.cjs",
     "preview": "node --env-file-if-exists=.env server/local.cjs --preview",
-    "test": "node --test tests/rest.test.cjs && node tests/evaluate.cjs"
+    "test": "node --test tests/rest.test.cjs tests/i18n.test.cjs && node tests/evaluate.cjs"
   },
   "dependencies": {
     "expo": "58.0.26",

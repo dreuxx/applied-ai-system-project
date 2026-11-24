@@ -1,22 +1,26 @@
-npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
 
 > cuecrate@2.0.0 test
-> node --test tests/rest.test.cjs && node tests/evaluate.cjs
+> node --test tests/rest.test.cjs tests/i18n.test.cjs && node tests/evaluate.cjs
 
-✔ catalog count, genres, track detail and multi-artist search (9.767858ms)
-✔ REST and local ranker return identical tracks and scores (25.657925ms)
-✔ profile guardrails, malformed input and method handling (3.939482ms)
-✔ Spotify without keys uses a search link (0.389457ms)
-✔ Spotify exact title/artist, token reuse, unavailable and no-match states with a test double (1.578968ms)
-✔ Netlify adapter dispatches REST requests (1.644226ms)
-ℹ tests 6
+✔ Spanish and English define the same interface texts (5.545428ms)
+✔ every text the screens ask for exists (4.178736ms)
+✔ texts, tag names and messages follow the chosen language (1.487841ms)
+✔ every Spanish message raised by the code has an English version (2.554702ms)
+✔ REST errors are Spanish by default and English on request (103.458027ms)
+✔ catalog count, genres, track detail and multi-artist search (70.253444ms)
+✔ REST and local ranker return identical tracks and scores (70.949028ms)
+✔ profile guardrails, malformed input and method handling (12.285313ms)
+✔ Spotify without keys uses a search link (2.194072ms)
+✔ Spotify exact title/artist, token reuse, unavailable and no-match states with a test double (3.911228ms)
+✔ Netlify adapter dispatches REST requests (7.260177ms)
+ℹ tests 11
 ℹ suites 0
-ℹ pass 6
+ℹ pass 11
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 229.695612
+ℹ duration_ms 719.194461
 {
   profiles: 19,
   slots: 57,

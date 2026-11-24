@@ -14,8 +14,10 @@ export async function api(path, options = {}) {
   try {
     let r;
     try {
+      // Messages arrive in Spanish and are translated where they are shown.
       r = await fetch(origin + "/api" + path, {
         ...options,
+        headers: { ...options.headers, "Accept-Language": "es" },
         signal: controller.signal,
       });
     } catch {

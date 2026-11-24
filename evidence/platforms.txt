@@ -31,3 +31,13 @@ Known issue on the live site: Netlify injects a "Powered by Netlify" badge in th
   (frame 194x64 px). At 390 px wide it covers the Perfil tab and part of Explorar; Perfil stays reachable
   through "Ajustar perfil" and the #Perfil URL. The badge comes from the hosting account, not this source.
 Still not performed: physical phone or simulator run, native binary build, authenticated Spotify request.
+
+Update 2026-11-24, Spanish and English interface.
+npm test: 11/11 tests (6 REST, 5 language) and the 19-profile ranking evaluation passed.
+tests/expo-browser.mjs passed against the production preview and against npx expo start --web with
+  Google Chrome, including the language switch, the saved choice after a reload and the ?lang=en link.
+Android and iOS JavaScript export passed. No physical phone or simulator run.
+On Android and iOS the language choice lasts for the session; only the web build saves it.
+The older single-file CueCrate_Movil.html remains Spanish only.
+Fixed while testing: the Expo development server stopped with "next is not a function" when a browser
+  requested a path Metro does not serve, such as /favicon.ico. metro.config.js now forwards next.

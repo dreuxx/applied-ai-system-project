@@ -3,10 +3,11 @@ import { Image, Linking } from "react-native";
 import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 import { artist, model, source, spotifySearch } from "./catalog";
 import { audio, art } from "./media";
-import { tr } from "./preferences";
+import { useLang } from "./lang";
 import { api } from "./client";
 import { T, Button, Sheet, st } from "./design";
 function Preview({ id }) {
+  const { t } = useLang();
   const player = useAudioPlayer(audio[id]);
   const status = useAudioPlayerStatus(player);
   async function toggle() {
@@ -21,13 +22,12 @@ function Preview({ id }) {
     }
   }
   return (
-    <Button onPress={toggle}>
-      {status.playing ? "Pausar muestra" : "Reproducir muestra · 7 s"}
-    </Button>
+    <Button onPress={toggle}>{t(status.playing ? "pause" : "play")}</Button>
   );
 }
 export default function TrackSheet({ item, onClose, onSeed }) {
   const { s, score, parts } = item;
+  const { t, label, message } = useLang();
   const [lookup, setLookup] = useState(null),
     [working, setWorking] = useState(false),
     [error, setError] = useState("");
@@ -53,51 +53,39 @@ export default function TrackSheet({ item, onClose, onSeed }) {
       />
       <T style={st.h2}>{artist(s)}</T>
       <T>
-        {s[2].map((j) => tr(model.genres[j])).join(" · ")}
+        {s[2].map((j) => label(model.genres[j])).join(" · ")}
         {s[5] === null ? "" : " · " + s[5] + " BPM"}
       </T>
       {score !== undefined && (
         <>
-          <T>{Math.round(score * 100)}/100 de compatibilidad</T>
+          <T>{t("compat", { n: Math.round(score * 100) })}</T>
           <T style={st.small}>
             {Object.keys(parts).length
               ? Object.entries(parts)
-                  .map(([k, v]) => k + " " + (100 * v).toFixed(1))
+                  .map(([k, v]) => t("part." + k) + " " + (100 * v).toFixed(1))
                   .join(" + ")
-              : "Coincidencia de género."}
+              : t("genreMatch")}
           </T>
         </>
       )}
       {audio[s[0]] && <Preview id={s[0]} />}
       <Button primary onPress={() => onSeed(s)}>
-        Usar como perfil
+        {t("seed")}
       </Button>
-      <Button onPress={() => open(source(s))}>Ficha del autor ↗</Button>
+      <Button onPress={() => open(source(s))}>{t("source")}</Button>
       {!lookup ? (
         <Button onPress={find} disabled={working}>
-          {working ? "Buscando en Spotify…" : "Buscar en Spotify"}
+          {t(working ? "spotifyFinding" : "spotifyFind")}
         </Button>
       ) : (
         <>
-          <T style={st.small}>
-            {
-              {
-                matched: "Coincidencia de título y artista.",
-                unconfigured:
-                  "La búsqueda manual está disponible. La API de Spotify no tiene credenciales configuradas.",
-                not_found: "No hubo coincidencia exacta de título y artista.",
-                unavailable: "Spotify no pudo confirmar la grabación.",
-              }[lookup.status]
-            }
-          </T>
+          <T style={st.small}>{t("spotify." + lookup.status)}</T>
           <Button onPress={() => open(lookup.url)}>
-            {lookup.match
-              ? "Abrir canción en Spotify ↗"
-              : "Abrir búsqueda en Spotify ↗"}
+            {t(lookup.match ? "spotifyOpenTrack" : "spotifyOpenSearch")}
           </Button>
         </>
       )}
-      {error ? <T style={st.small}>{error}</T> : null}
+      {error ? <T style={st.small}>{message(error)}</T> : null}
     </Sheet>
   );
 }

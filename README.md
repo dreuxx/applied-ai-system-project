@@ -23,6 +23,8 @@ The Module 3 **Music Recommender Simulation** ranked 18 hand-written tracks from
 
 Start on **Inicio** and tap the **Hip hop** sleeve to run a hip-hop/bass profile. Tap *Big Plans Remix* by Kellee Maize to see its score, then **Usar como perfil** to find neighbors. **Explorar** lets you search 103 genres. **Perfil** contains the preference controls and the [CSV importer](data/preferencias.csv). The headphone icon opens a selection with offline audio. Tap a track to play its excerpt.
 
+The interface is available in Spanish and English. The **ES EN** control in the header, or **Idioma** on the Perfil screen, switches every label, tag name and message. The browser remembers the choice, and a link ending in `/?lang=en` opens the app in English. This walkthrough uses the Spanish names, which are the default. The REST service returns its error messages in English when the request sends `Accept-Language: en`.
+
 [Design reference](assets/design-reference.webp) · [Expo app in a mobile viewport](assets/expo-home.png). The original editorial artwork is bundled locally. The discovery screen starts with three editorial picks. After a search, the home list shows the listener’s actual recommendations.
 
 ## Catalog and features
@@ -115,7 +117,7 @@ GET /api/tracks/track_0521030/spotify (no server credentials)
 → 200, status: unconfigured, manual search link available
 ```
 
-The browser suite exercised the Expo dev server and the production web export, including the actual REST requests, CSV selection, audio playback and offline reload. Six automated REST tests cover input handling, parity with local inference, the Netlify adapter and Spotify response handling. The exact-match, missing-match and rate-limit Spotify scenarios used simulated responses. A live authenticated Spotify catalog request and physical-device runs were not performed.
+The browser suite exercised the Expo dev server and the production web export, including the actual REST requests, CSV selection, audio playback and offline reload. Eleven automated tests cover input handling, parity with local inference, the Netlify adapter, Spotify response handling, and the Spanish and English texts, including a check that every screen text and every error message exists in both languages. The browser suite also switches the interface to English and back. The exact-match, missing-match and rate-limit Spotify scenarios used simulated responses. A live authenticated Spotify catalog request and physical-device runs were not performed.
 
 The [Netlify deployment](https://cuecrate.netlify.app/) was checked in Chrome on 24 November 2026. It serves the same web bundle that `npm run build` produces from this repository, answers the three REST requests above with the same results, and passed genre ranking, the track sheet, REST search and ranking, sample playback and an offline reload with zero page errors. Netlify adds a "Powered by Netlify" badge that covers the **Perfil** tab on phone-width screens. **Ajustar perfil** on the Explorar screen opens the same view. [Development UI](evidence/expo-dev.json) · [Production and offline UI](evidence/expo-preview.json) · [Platform and deployment checks](evidence/platforms.txt) · [REST tests](evidence/rest-tests.txt).
 

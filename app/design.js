@@ -9,6 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useLang } from "./lang";
 export const c = {
   bg: "#150f19",
   panel: "#261d2c",
@@ -62,6 +63,7 @@ export function Input(props) {
   );
 }
 export function Sheet({ title, onClose, children }) {
+  const { t } = useLang();
   return (
     <Modal visible transparent animationType="fade" onRequestClose={onClose}>
       <SafeAreaView style={st.overlay}>
@@ -70,8 +72,8 @@ export function Sheet({ title, onClose, children }) {
             <T accessibilityRole="header" style={[st.h2, { flex: 1 }]}>
               {title}
             </T>
-            <Button label="Cerrar" onPress={onClose}>
-              Cerrar ×
+            <Button label={t("close")} onPress={onClose}>
+              {t("close")} ×
             </Button>
           </View>
           <ScrollView
@@ -168,6 +170,16 @@ export const st = StyleSheet.create({
     borderColor: c.line,
   },
   tab: { alignItems: "center", padding: 9, minWidth: 78, minHeight: 49 },
+  lang: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    minHeight: 34,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: c.line,
+    borderRadius: 17,
+  },
   overlay: {
     flex: 1,
     backgroundColor: "#09070ccf",
