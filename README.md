@@ -115,7 +115,9 @@ GET /api/tracks/track_0521030/spotify (no server credentials)
 → 200, status: unconfigured, manual search link available
 ```
 
-The browser suite exercised the Expo dev server and the production web export, including the actual REST requests, CSV selection, audio playback and offline reload. Six automated REST tests cover input handling, parity with local inference, the Netlify adapter and Spotify response handling. The exact-match, missing-match and rate-limit Spotify scenarios used simulated responses. A live authenticated Spotify catalog request and physical-device runs were not performed. [Development UI](evidence/expo-dev.json) · [Production and offline UI](evidence/expo-preview.json) · [Local platform checks](evidence/platforms.txt) · [REST tests](evidence/rest-tests.txt).
+The browser suite exercised the Expo dev server and the production web export, including the actual REST requests, CSV selection, audio playback and offline reload. Six automated REST tests cover input handling, parity with local inference, the Netlify adapter and Spotify response handling. The exact-match, missing-match and rate-limit Spotify scenarios used simulated responses. A live authenticated Spotify catalog request and physical-device runs were not performed.
+
+The [Netlify deployment](https://cuecrate.netlify.app/) was checked in Chrome on 24 November 2026. It serves the same web bundle that `npm run build` produces from this repository, answers the three REST requests above with the same results, and passed genre ranking, the track sheet, REST search and ranking, sample playback and an offline reload with zero page errors. Netlify adds a "Powered by Netlify" badge that covers the **Perfil** tab on phone-width screens. **Ajustar perfil** on the Explorar screen opens the same view. [Development UI](evidence/expo-dev.json) · [Production and offline UI](evidence/expo-preview.json) · [Platform and deployment checks](evidence/platforms.txt) · [REST tests](evidence/rest-tests.txt).
 
 ## Reflection and portfolio
 

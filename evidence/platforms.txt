@@ -11,3 +11,23 @@ npx expo export --platform android --platform ios --output-dir dist-native:
   Android and iOS Hermes JavaScript bundles and local media. No physical phone or simulator run.
 Spotify: no-key fallback verified in Chromium. Authenticated scenarios used a simulated upstream.
 The release was tested locally. No public deployment or GitHub push was performed.
+
+Update 2026-11-24, after publication (the lines above record the pre-release local run).
+Source pushed to https://github.com/dreuxx/applied-ai-system-project (branch main).
+Deployed at https://cuecrate.netlify.app. The served web bundle name
+  index-28a18f50edb3b5627753a4d0bb762c34.js equals the one produced by npm run build from this source.
+Re-run on Linux Mint / Node 24.22.3 from a clean clone: npm ci (473 packages), npm test (6/6 REST tests
+  and the 19-profile ranking evaluation), tests/check_vectors.py, npm run build, tests/expo-browser.mjs
+  against the production preview with Google Chrome, and the Android and iOS JavaScript export. All passed.
+python tools/train.py reproduced every count in classifier.json; 4 of 13,081 rounded weights differed
+  by 0.000001 and the ranking evaluation was unchanged.
+Live site, Google Chrome at 390x844:
+  GET / -> 200; GET /api/health -> {"status":"ok","tracks":56656,"genres":103}
+  POST /api/recommendations with genre Hip Hop and instrument Bass -> Big Plans Remix.
+  GET /api/tracks/track_0521030/spotify -> status unconfigured (no Spotify credentials on the site).
+  Home genre, track sheet, Spotify search fallback, REST search, REST ranking, sample playback and
+  offline reload with local ranking and local search passed with zero page errors.
+Known issue on the live site: Netlify injects a "Powered by Netlify" badge in the bottom-right corner
+  (frame 194x64 px). At 390 px wide it covers the Perfil tab and part of Explorar; Perfil stays reachable
+  through "Ajustar perfil" and the #Perfil URL. The badge comes from the hosting account, not this source.
+Still not performed: physical phone or simulator run, native binary build, authenticated Spotify request.

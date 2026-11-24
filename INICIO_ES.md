@@ -69,6 +69,8 @@ Ejecuta `npx expo start` con la PC y el teléfono en la misma Wi-Fi y usa un cli
 
 ## 6. GitHub y Netlify
 
+El proyecto ya está publicado en [github.com/dreuxx/applied-ai-system-project](https://github.com/dreuxx/applied-ai-system-project) y desplegado en [cuecrate.netlify.app](https://cuecrate.netlify.app/). Los pasos siguientes sirven para publicar tu propia copia.
+
 Puedes publicar el contenido de **CueCrate_Movil** como raíz de un repositorio. Para llevar también los commits previos, usa el bundle incluido desde la carpeta donde descomprimiste el ZIP:
 
 ```bash
@@ -88,4 +90,4 @@ npm run build
 npx netlify-cli@27.20.1 dev --offline --no-open
 ```
 
-Abre **http://localhost:8888**. Para desplegar más adelante, conecta el repo en Netlify. `netlify.toml` ya define **npm run build**, **dist** y **netlify/functions**. Si el repo contiene el proyecto dentro de una subcarpeta, usa esa carpeta como base. Importar el repositorio permite que Netlify compile el sitio y empaquete la API.
+Abre **http://localhost:8888**. Para desplegar tu copia, conecta el repo en Netlify. `netlify.toml` ya define **npm run build**, **dist** y **netlify/functions**. Si el repo contiene el proyecto dentro de una subcarpeta, usa esa carpeta como base. Importar el repositorio permite que Netlify compile el sitio y empaquete la API.
