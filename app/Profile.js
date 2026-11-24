@@ -62,6 +62,23 @@ export default function Profile({
   return (
     <View style={st.section}>
       <T style={st.h1}>{t("profileTitle")}</T>
+      <View style={st.between}>
+        <T style={{ flex: 1 }}>{t("language")}</T>
+        <View style={st.wrap}>
+          {[
+            ["es", "Español"],
+            ["en", "English"],
+          ].map(([code, name]) => (
+            <Button
+              key={code}
+              selected={lang === code}
+              onPress={() => choose(code)}
+            >
+              {name}
+            </Button>
+          ))}
+        </View>
+      </View>
       {Object.entries(fields).map(([k, labels]) => (
         <View key={k} style={{ gap: 6 }}>
           <T>{t("field." + k)}</T>
@@ -130,23 +147,6 @@ export default function Profile({
         </Button>
       ))}
       {notice ? <T>{message(notice)}</T> : null}
-      <View style={st.between}>
-        <T style={{ flex: 1 }}>{t("language")}</T>
-        <View style={st.wrap}>
-          {[
-            ["es", "Español"],
-            ["en", "English"],
-          ].map(([code, name]) => (
-            <Button
-              key={code}
-              selected={lang === code}
-              onPress={() => choose(code)}
-            >
-              {name}
-            </Button>
-          ))}
-        </View>
-      </View>
       <T style={st.small}>{t("credits")}</T>
       {field && (
         <Sheet title={t("field." + field)} onClose={() => setField(null)}>

@@ -27,15 +27,26 @@ const cache = "cuecrate-web-" + hash.digest("hex").slice(0, 16);
 fs.writeFileSync(
   path.join(root, "register-worker.js"),
   `
-if ("serviceWorker" in navigator) window.addEventListener("load", () => {
-  navigator.serviceWorker.register("/sw.js").catch(error => console.warn("CueCrate offline:",error.message));
-});`,
+if ("serviceWorker" in navigator) {
+  // A newly published version takes control once it is cached. Show it without a manual reload.
+  const controlled = Boolean(navigator.serviceWorker.controller);
+  let reloading = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (!controlled || reloading) return;
+    reloading = true;
+    window.location.reload();
+  });
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js").catch(error => console.warn("CueCrate offline:",error.message));
+  });
+}`,
 );
 fs.writeFileSync(
   path.join(root, "sw.js"),
   `
 const name=${JSON.stringify(cache)}, assets=new Set(${JSON.stringify([...files.map((n) => "/" + n), "/register-worker.js"])});
-self.addEventListener("install",event=>event.waitUntil(caches.open(name).then(cache=>cache.addAll([...assets]))));
+// Replace the previous version as soon as this one is fully cached, instead of waiting for every tab to close.
+self.addEventListener("install",event=>event.waitUntil(caches.open(name).then(cache=>cache.addAll([...assets])).then(()=>self.skipWaiting())));
 self.addEventListener("activate",event=>event.waitUntil((async()=>{
   for(const key of await caches.keys())if(key.startsWith("cuecrate-web-")&&key!==name)await caches.delete(key);
   await self.clients.claim();
