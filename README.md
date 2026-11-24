@@ -1,5 +1,7 @@
 # CueCrate · React Native, Expo and REST
 
+**[Live demo](https://cuecrate.netlify.app/)** · [Repository](https://github.com/dreuxx/applied-ai-system-project)
+
 Local-first music discovery across 56,656 recordings. The Expo project runs in a desktop browser and exports native JavaScript bundles for Android and iOS. The app ranks on-device by default and can send an explicitly selected profile to its REST service.
 
 ## Run on a PC
@@ -117,4 +119,4 @@ The browser suite exercised the Expo dev server and the production web export, i
 
 ## Reflection and portfolio
 
-Working with songs that have several genres changed both the data structure and the evaluation. A rock-and-reggae recording needs to be retrievable under either label. The project demonstrates data integration, supervised learning, on-device ranking and artist-disjoint evaluation. The owner will add the final public repository URL after publishing. [Six-minute presentation](presentation/Walkthrough.pdf) · [Spanish instructions and GitHub steps](INICIO_ES.md).
+Working with songs that have several genres changed both the data structure and the evaluation. A rock-and-reggae recording needs to be retrievable under either label. The project demonstrates data integration, supervised learning, on-device ranking and artist-disjoint evaluation. The app is deployed at [cuecrate.netlify.app](https://cuecrate.netlify.app/) and the source is at [github.com/dreuxx/applied-ai-system-project](https://github.com/dreuxx/applied-ai-system-project). [Six-minute presentation](presentation/Walkthrough.pdf) · [Spanish instructions and GitHub steps](INICIO_ES.md).

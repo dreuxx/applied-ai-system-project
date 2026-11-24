@@ -1,5 +1,7 @@
 # CueCrate en tu PC
 
+**[Demo en línea](https://cuecrate.netlify.app/)** · [Repositorio](https://github.com/dreuxx/applied-ai-system-project)
+
 La app está escrita en React Native con Expo. Abre en un navegador de PC y comparte las pantallas y el recomendador con Android e iOS. La API REST funciona en local con Node y en Netlify con una función. Python solo hace falta para volver a entrenar el modelo.
 
 ## 1. Arrancar en local
