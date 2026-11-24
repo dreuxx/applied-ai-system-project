@@ -1,0 +1,4 @@
+{ profiles: 16, slots: 48, direct: 48, hybrid: 48, changed: 3 }
+Jazz: Samba Isobel, Ultralounge, Bass Vibes
+Rock: Neolith, Metalmania, Cool Rock
+Empty: empty; Urban + harpsichord (strict): no_match.

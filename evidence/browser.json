@@ -1,0 +1,23 @@
+{
+  "browser": "153.0.8010.0",
+  "mode": "file:// offline, touch emulation",
+  "checks": [
+    "empty profile",
+    "jazz profile",
+    "five results",
+    "classifier output visible",
+    "local CSV import",
+    "rock profile changes first result",
+    "offline audio plays",
+    "seed excluded",
+    "invalid CSV",
+    "reset",
+    "layout 320",
+    "layout 390",
+    "layout 768",
+    "zero network requests",
+    "zero JS errors"
+  ],
+  "network": [],
+  "errors": []
+}

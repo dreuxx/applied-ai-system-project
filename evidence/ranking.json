@@ -1,0 +1,528 @@
+{
+  "profiles": 16,
+  "slots": 48,
+  "direct": 48,
+  "hybrid": 48,
+  "changed": 3,
+  "detail": [
+    {
+      "name": "Study jazz",
+      "input": {
+        "g": 9,
+        "m": [
+          15
+        ],
+        "i": [
+          23
+        ],
+        "bpm": 90
+      },
+      "direct": [
+        "Samba Isobel",
+        "Ultralounge",
+        "Bass Vibes"
+      ],
+      "hybrid": [
+        "Samba Isobel",
+        "Ultralounge",
+        "Bass Vibes"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "animo": 0.20377068324339734,
+        "instrumentos": 0.20377068324339734,
+        "tempo": 0.172976236465898,
+        "modelo": 0.03902421450328341
+      }
+    },
+    {
+      "name": "Workout rock",
+      "input": {
+        "g": 15,
+        "m": [
+          11
+        ],
+        "i": [
+          10
+        ],
+        "bpm": 140
+      },
+      "direct": [
+        "Neolith",
+        "Metalmania",
+        "Cool Rock"
+      ],
+      "hybrid": [
+        "Neolith",
+        "Metalmania",
+        "Cool Rock"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "animo": 0.20377068324339734,
+        "instrumentos": 0.20377068324339734,
+        "tempo": 0.172976236465898,
+        "modelo": 0.10846270730975058
+      }
+    },
+    {
+      "name": "Horror",
+      "input": {
+        "g": 8,
+        "m": [
+          7,
+          5
+        ],
+        "i": [],
+        "bpm": null
+      },
+      "direct": [
+        "The Voices",
+        "The Dread",
+        "It is Lost"
+      ],
+      "hybrid": [
+        "The Voices",
+        "The Dread",
+        "It is Lost"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "animo": 0.6123724356957946,
+        "modelo": 0.17976758274671623
+      }
+    },
+    {
+      "name": "Funk",
+      "input": {
+        "g": 6,
+        "m": [
+          9
+        ],
+        "i": [
+          2
+        ],
+        "bpm": null
+      },
+      "direct": [
+        "Fork and Spoon",
+        "Your Call",
+        "Smooth Move"
+      ],
+      "hybrid": [
+        "Fork and Spoon",
+        "Your Call",
+        "Smooth Move"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "animo": 0.42857142857142855,
+        "instrumentos": 0.3030457633656632,
+        "modelo": 0.04617535110871706
+      }
+    },
+    {
+      "name": "Soft guitar",
+      "input": {
+        "g": null,
+        "m": [
+          15,
+          4
+        ],
+        "i": [
+          10
+        ],
+        "bpm": null
+      },
+      "direct": [
+        "Somewhere Sunny",
+        "Windswept",
+        "Midnight Tale"
+      ],
+      "hybrid": [
+        "Windswept",
+        "Silver Blue Light",
+        "Almost Bliss"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "animo": 0.42857142857142855,
+        "instrumentos": 0.3030457633656632,
+        "modelo": 0.14285714285714285
+      }
+    },
+    {
+      "name": "Playful flute",
+      "input": {
+        "g": null,
+        "m": [
+          2,
+          10
+        ],
+        "i": [
+          9
+        ],
+        "bpm": null
+      },
+      "direct": [
+        "Sneaky",
+        "Fluffing a Duck",
+        "Radio Martini"
+      ],
+      "hybrid": [
+        "Sneaky",
+        "Flighty Theme",
+        "Monkeys Spinning Monkeys"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "animo": 0.3499271061118826,
+        "instrumentos": 0.42857142857142855,
+        "modelo": 0.14285714285714285
+      }
+    },
+    {
+      "name": "Hopeful orchestra",
+      "input": {
+        "g": null,
+        "m": [
+          20,
+          8
+        ],
+        "i": [
+          20
+        ],
+        "bpm": null
+      },
+      "direct": [
+        "Thaxted (Holst)",
+        "Second Coming - no percussion",
+        "Danse Macabre - Big Hit 2"
+      ],
+      "hybrid": [
+        "Second Coming - no percussion",
+        "Thaxted (Holst)",
+        "Egmont Overture Finale"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "animo": 0.42857142857142855,
+        "instrumentos": 0.42857142857142855,
+        "modelo": 0.14285714285714285
+      }
+    },
+    {
+      "name": "Harp",
+      "input": {
+        "g": null,
+        "m": [
+          4
+        ],
+        "i": [
+          12
+        ],
+        "bpm": null
+      },
+      "direct": [
+        "Evening Fall (Harp)",
+        "Canon in D for Two Renaissance Harps",
+        "Canon in D for Two Harps"
+      ],
+      "hybrid": [
+        "Evening Fall (Harp)",
+        "Enchanted Journey",
+        "Canon in D for Two Renaissance Harps"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "animo": 0.24743582965269678,
+        "instrumentos": 0.42857142857142855,
+        "modelo": 0.14285714285714285
+      }
+    },
+    {
+      "name": "Strings",
+      "input": {
+        "g": null,
+        "m": [
+          17,
+          5
+        ],
+        "i": [
+          25
+        ],
+        "bpm": null
+      },
+      "direct": [
+        "Grave Matters",
+        "Dark Times",
+        "Promising Relationship"
+      ],
+      "hybrid": [
+        "Grave Matters",
+        "Dark Times",
+        "Promising Relationship"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "animo": 0.42857142857142855,
+        "instrumentos": 0.42857142857142855,
+        "modelo": 0.14285714285714285
+      }
+    },
+    {
+      "name": "Electronic drive",
+      "input": {
+        "g": 5,
+        "m": [
+          6
+        ],
+        "i": [
+          26
+        ],
+        "bpm": null
+      },
+      "direct": [
+        "EDM Detection Mode",
+        "Long Time Coming",
+        "Blipotron"
+      ],
+      "hybrid": [
+        "EDM Detection Mode",
+        "Long Time Coming",
+        "Blipotron"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "animo": 0.42857142857142855,
+        "instrumentos": 0.3030457633656632,
+        "modelo": 0.14285714285714285
+      }
+    },
+    {
+      "name": "Bright brass",
+      "input": {
+        "g": null,
+        "m": [
+          3,
+          9
+        ],
+        "i": [
+          29
+        ],
+        "bpm": null
+      },
+      "direct": [
+        "First Call",
+        "Dispersion Relation",
+        "Farting Around"
+      ],
+      "hybrid": [
+        "First Call",
+        "Dispersion Relation",
+        "Farting Around"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "animo": 0.3030457633656632,
+        "instrumentos": 0.42857142857142855,
+        "modelo": 0.14285714285714285
+      }
+    },
+    {
+      "name": "Mysterious piano",
+      "input": {
+        "g": null,
+        "m": [
+          13
+        ],
+        "i": [
+          23
+        ],
+        "bpm": null
+      },
+      "direct": [
+        "Dark Hallway (clean)",
+        "Gymnopedie No. 3",
+        "Colorless Aura"
+      ],
+      "hybrid": [
+        "SCP-x7x (6th Floor)",
+        "Dark Hallway (clean)",
+        "Nervous"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "animo": 0.3030457633656632,
+        "instrumentos": 0.42857142857142855,
+        "modelo": 0.13587279673482414
+      }
+    },
+    {
+      "name": "Tension",
+      "input": {
+        "g": null,
+        "m": [
+          18,
+          11
+        ],
+        "i": [
+          22
+        ],
+        "bpm": null
+      },
+      "direct": [
+        "Chee Zee Caves V2",
+        "Decisions",
+        "Scissors"
+      ],
+      "hybrid": [
+        "Chee Zee Caves V2",
+        "Hit the Streets v2",
+        "Medusa"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "animo": 0.42857142857142855,
+        "instrumentos": 0.3030457633656632,
+        "modelo": 0.14285714285714285
+      }
+    },
+    {
+      "name": "Organ",
+      "input": {
+        "g": null,
+        "m": [
+          9
+        ],
+        "i": [
+          21
+        ],
+        "bpm": null
+      },
+      "direct": [
+        "Sinfonia No. 3 in D Major - BWV 789",
+        "Wah Game Loop",
+        "Carnivale Intrigue"
+      ],
+      "hybrid": [
+        "Sinfonia No. 3 in D Major - BWV 789",
+        "Wah Game Loop",
+        "Hep Cats"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "animo": 0.42857142857142855,
+        "instrumentos": 0.24743582965269678,
+        "modelo": 0.14285714285714285
+      }
+    },
+    {
+      "name": "Reflective cello",
+      "input": {
+        "g": null,
+        "m": [
+          15,
+          4
+        ],
+        "i": [
+          6
+        ],
+        "bpm": null
+      },
+      "direct": [
+        "Water Lily",
+        "Reawakening",
+        "Adeste Fideles Waltz"
+      ],
+      "hybrid": [
+        "Water Lily",
+        "Reawakening",
+        "Trio for Piano, Cello, and Clarinet"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "animo": 0.42857142857142855,
+        "instrumentos": 0.24743582965269678,
+        "modelo": 0.14285714285714285
+      }
+    },
+    {
+      "name": "Reggae",
+      "input": {
+        "g": 14,
+        "m": [
+          9
+        ],
+        "i": [
+          8
+        ],
+        "bpm": null
+      },
+      "direct": [
+        "Smash (Sketch)",
+        "Yallahs",
+        "Mandeville"
+      ],
+      "hybrid": [
+        "Smash (Sketch)",
+        "Yallahs",
+        "Mandeville"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "animo": 0.3030457633656632,
+        "instrumentos": 0.24743582965269678,
+        "modelo": 0.018914089677794486
+      }
+    }
+  ]
+}
