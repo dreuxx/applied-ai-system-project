@@ -5,6 +5,34 @@
     audio = JSON.parse($("audio").textContent),
     bank = new Set(Object.keys(audio));
   const dictionary = {
+    Happy: "Feliz",
+    Sad: "Triste",
+    Soft: "Suave",
+    Dream: "Sueño",
+    Positive: "Positivo",
+    Powerful: "Potente",
+    Romantic: "Romántico",
+    Love: "Amor",
+    Party: "Fiesta",
+    Hopeful: "Esperanzador",
+    Emotional: "Emotivo",
+    Inspiring: "Inspirador",
+    Fun: "Divertido",
+    Adventure: "Aventura",
+    Sport: "Deporte",
+    Mellow: "Apacible",
+    Meditative: "Meditativo",
+    Fast: "Rápido",
+    Slow: "Lento",
+    Dance: "Dance",
+    "Acoustic Guitar": "Guitarra acústica",
+    "Electric Guitar": "Guitarra eléctrica",
+    "Classical Guitar": "Guitarra clásica",
+    "Electric Piano": "Piano eléctrico",
+    "Double Bass": "Contrabajo",
+    Keyboard: "Teclado",
+    "Drum Machine": "Caja de ritmos",
+    Electronic: "Electronic",
     Relaxed: "Relajado",
     Calming: "Calmante",
     Intense: "Intenso",
@@ -72,6 +100,15 @@
       if (cls) n.className = cls;
       return n;
     };
+  const number = (n) => n.toLocaleString("es-ES");
+  $("catalogInfo").textContent =
+    "Compara tus preferencias con " +
+    number(d.tracks.length) +
+    " canciones de " +
+    number(d.artists.length) +
+    " artistas. Puedes explorar " +
+    d.genres.length +
+    " géneros sin conexión.";
   let m = [],
     i = [],
     seed = null,
@@ -154,6 +191,11 @@
             " recomendaciones entre " +
             r.eligible +
             " pistas elegibles.";
+    if (seed)
+      $("status").textContent +=
+        " Perfil de referencia: " +
+        d.tracks.find((s) => s[0] === seed)[1] +
+        ".";
     for (const v of r.rows) {
       const s = v.s,
         a = node("article", null, "card"),
@@ -166,8 +208,9 @@
         h,
         node(
           "p",
-          "Kevin MacLeod · " +
-            tr(d.genres[s[2]]) +
+          (s[7] ?? d.artists[s[6]]) +
+            " · " +
+            s[2].map((j) => tr(d.genres[j])).join(" / ") +
             " · " +
             (s[5] === null ? "Tempo sin datos" : s[5] + " BPM"),
         ),
@@ -203,7 +246,7 @@
       const b = node("button", "Usar como perfil", "link");
       b.onclick = () => {
         load({
-          g: s[2],
+          g: p.g,
           m: s[3],
           i: s[4],
           bpm: s[5],
@@ -214,9 +257,10 @@
       };
       a.append(b);
       const link = node("a", "Ficha del autor ↗");
-      link.href =
-        "https://incompetech.com/music/royalty-free/index.html?isrc=" +
-        encodeURIComponent(s[0]);
+      link.href = s[0].startsWith("track_")
+        ? "https://www.jamendo.com/track/" + Number(s[0].slice(6))
+        : "https://incompetech.com/music/royalty-free/index.html?isrc=" +
+          encodeURIComponent(s[0]);
       link.target = "_blank";
       link.rel = "noopener noreferrer";
       a.append(link);
@@ -225,7 +269,7 @@
     $("math").textContent =
       "La puntuación sobre 100 mide compatibilidad con tu selección. " +
       (r.prob.length
-        ? "El clasificador estima los géneros asociados con esos rasgos: " +
+        ? "El modelo estima cada etiqueta de género por separado; una canción puede tener varias: " +
           r.prob
             .map((v, j) => [v, j])
             .sort((a, b) => b[0] - a[0])
@@ -253,10 +297,10 @@
   };
   $("preset").onclick = () => {
     load({
-      g: d.genres.indexOf("Jazz"),
-      m: [d.moods.indexOf("Relaxed")],
-      i: [d.instruments.indexOf("Piano")],
-      bpm: 90,
+      g: d.genres.indexOf("Hip Hop"),
+      m: [],
+      i: [d.instruments.indexOf("Bass")],
+      bpm: null,
       strict: true,
     });
     draw();

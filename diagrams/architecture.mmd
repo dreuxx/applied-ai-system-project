@@ -1,12 +1,14 @@
 flowchart TD
- CSV["Catalog CSV"] --> X["61 numeric features"]
- X --> T["Python genre classifier"]
+ HF["Hugging Face / MTG-Jamendo"] --> CSV["Joined catalog"]
+ IC["Incompetech CSV"] --> CSV
+ CSV --> X["229-dimensional track vectors"]
+ X --> T["103 genre classifiers / 126 input features"]
  X --> B["Embed model and catalog in HTML"]
  T --> B
  A["Audio excerpts"] --> B
  U["Listener form or CSV"] --> P["Preference vector"]
  B --> P
- P --> G["Genre probabilities"]
+ P --> G["Independent genre estimates"]
  P --> F["Check genre, tags, tempo and preview availability"]
  G --> R["Rank and explain"]
  F --> R

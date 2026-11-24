@@ -23,7 +23,7 @@ function scoreMusic(d, p, bank = new Set(), useModel = true) {
   }
   if (bpm !== null && (!Number.isInteger(bpm) || bpm < 20 || bpm > 240))
     throw Error("Tempo fuera de rango.");
-  if (g === null && !m.length && !i.length && bpm === null)
+  if (!seed && g === null && !m.length && !i.length && bpm === null)
     return { status: "empty", rows: [], prob: [] };
   const x = Array(d.w.length - 1).fill(0);
   for (const j of m) x[j] = 1 / Math.sqrt(m.length);
@@ -36,22 +36,23 @@ function scoreMusic(d, p, bank = new Set(), useModel = true) {
   x.forEach((v, j) => {
     if (v) for (let c = 0; c < z.length; c++) z[c] += v * d.w[j][c];
   });
-  const highest = Math.max(...z),
-    e = z.map((v) => Math.exp(v - highest)),
-    sum = e.reduce((a, b) => a + b, 0),
-    prob = e.map((v) => v / sum),
-    peak = Math.max(...prob);
-  const family = (t) =>
-      t
-        .toLowerCase()
-        .split(/\s+-\s+|\s*\(/)[0]
-        .trim(),
-    seedSong = d.tracks.find((s) => s[0] === seed),
-    candidates = [];
+  // Genres overlap, so each column has its own sigmoid.
+  const prob = z.map((value) => 1 / (1 + Math.exp(-value)));
+  const peak = Math.max(...prob);
+  const family = (s) =>
+    s[6] +
+    "|" +
+    s[1]
+      .toLowerCase()
+      .split(/\s+-\s+|\s*\(/)[0]
+      .trim();
+  const seedSong = seed ? d.tracks.find((s) => s[0] === seed) : null;
+  if (seed && !seedSong) throw Error("Pista de origen desconocida.");
+  const candidates = [];
   for (const s of d.tracks) {
-    if (seedSong && family(seedSong[1]) === family(s[1])) continue;
+    if (seedSong && family(seedSong) === family(s)) continue;
     if (
-      (g !== null && g !== s[2]) ||
+      (g !== null && !s[2].includes(g)) ||
       (previews && !bank.has(s[0])) ||
       (bpm !== null && s[5] === null)
     )
@@ -65,6 +66,13 @@ function scoreMusic(d, p, bank = new Set(), useModel = true) {
       continue;
     const parts = {};
     let weight = 0;
+    if (seedSong) {
+      const shared = s[2].filter((j) => seedSong[2].includes(j)).length;
+      if (!shared) continue;
+      parts.generos =
+        (2 * shared) / Math.sqrt(s[2].length * seedSong[2].length);
+      weight += 2;
+    }
     if (m.length) {
       parts.animo =
         (3 * mh.length) / Math.sqrt(m.length * Math.max(1, s[3].length));
@@ -80,7 +88,8 @@ function scoreMusic(d, p, bank = new Set(), useModel = true) {
       weight += 1.5;
     }
     if (useModel && (m.length || i.length)) {
-      parts.modelo = prob[s[2]] / peak;
+      parts.modelo =
+        (g === null ? Math.max(...s[2].map((j) => prob[j])) : prob[g]) / peak;
       weight += 1;
     }
     for (const k of Object.keys(parts)) parts[k] /= weight;
@@ -88,15 +97,29 @@ function scoreMusic(d, p, bank = new Set(), useModel = true) {
     candidates.push({ s, score, mh, ih, parts });
   }
   candidates.sort((a, b) => b.score - a.score || (a.s[0] < b.s[0] ? -1 : 1));
+  // Diversify equally scored recordings while preserving score order.
   const seen = new Set(),
+    artists = new Set(),
     rows = [];
-  for (const r of candidates) {
-    const f = family(r.s[1]);
-    if (!seen.has(f)) {
-      seen.add(f);
-      rows.push(r);
+  function add(r) {
+    const key = family(r.s);
+    if (seen.has(key)) return;
+    seen.add(key);
+    artists.add(r.s[6]);
+    rows.push(r);
+  }
+  for (let start = 0; start < candidates.length && rows.length < 5; ) {
+    let end = start + 1;
+    while (
+      end < candidates.length &&
+      candidates[end].score === candidates[start].score
+    )
+      end++;
+    for (let j = start; j < end && rows.length < 5; j++) {
+      if (!artists.has(candidates[j].s[6])) add(candidates[j]);
     }
-    if (rows.length === 5) break;
+    for (let j = start; j < end && rows.length < 5; j++) add(candidates[j]);
+    start = end;
   }
   return {
     status: rows.length ? "ok" : "no_match",

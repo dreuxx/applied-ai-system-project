@@ -1,4 +1,14 @@
-{ profiles: 16, slots: 48, direct: 48, hybrid: 48, changed: 3 }
-Jazz: Samba Isobel, Ultralounge, Bass Vibes
-Rock: Neolith, Metalmania, Cool Rock
-Empty: empty; Urban + harpsichord (strict): no_match.
+{
+  profiles: 19,
+  slots: 57,
+  direct: 57,
+  hybrid: 57,
+  changed: 4,
+  genreFilters: 103
+}
+Hip hop with bass: Big Plans Remix, Smooth casual, End Of Times
+Reggae with guitar: Condition Humaine, Hypnotic reagge, Age
+Jazz with piano: Night on the Docks - Piano, Voyageur, When I Was With You
+Study jazz: Samba Isobel, Ultralounge, Bass Vibes
+Workout rock: Neolith, Metalmania, Cool Rock
+Empty: empty; Urban + Harpsichord (strict): no_match

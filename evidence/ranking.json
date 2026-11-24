@@ -1,19 +1,106 @@
 {
-  "profiles": 16,
-  "slots": 48,
-  "direct": 48,
-  "hybrid": 48,
-  "changed": 3,
+  "profiles": 19,
+  "slots": 57,
+  "direct": 57,
+  "hybrid": 57,
+  "changed": 4,
   "detail": [
+    {
+      "name": "Hip hop with bass",
+      "input": {
+        "g": 50,
+        "m": [],
+        "i": [
+          4
+        ],
+        "bpm": null
+      },
+      "direct": [
+        "Big Plans Remix",
+        "Smooth casual",
+        "End Of Times"
+      ],
+      "hybrid": [
+        "Big Plans Remix",
+        "Smooth casual",
+        "End Of Times"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "instrumentos": 0.75,
+        "modelo": 0.047594408110761884
+      }
+    },
+    {
+      "name": "Reggae with guitar",
+      "input": {
+        "g": 83,
+        "m": [],
+        "i": [
+          21
+        ],
+        "bpm": null
+      },
+      "direct": [
+        "Condition Humaine",
+        "Hypnotic reagge",
+        "Age"
+      ],
+      "hybrid": [
+        "Condition Humaine",
+        "Hypnotic reagge",
+        "Age"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "instrumentos": 0.75,
+        "modelo": 0.012401960275552881
+      }
+    },
+    {
+      "name": "Jazz with piano",
+      "input": {
+        "g": 60,
+        "m": [],
+        "i": [
+          36
+        ],
+        "bpm": null
+      },
+      "direct": [
+        "Night on the Docks - Piano",
+        "Voyageur",
+        "When I Was With You"
+      ],
+      "hybrid": [
+        "Night on the Docks - Piano",
+        "Voyageur",
+        "When I Was With You"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "instrumentos": 0.75,
+        "modelo": 0.05153117037598803
+      }
+    },
     {
       "name": "Study jazz",
       "input": {
-        "g": 9,
+        "g": 60,
         "m": [
-          15
+          51
         ],
         "i": [
-          23
+          36
         ],
         "bpm": 90
       },
@@ -35,18 +122,18 @@
         "animo": 0.20377068324339734,
         "instrumentos": 0.20377068324339734,
         "tempo": 0.172976236465898,
-        "modelo": 0.03902421450328341
+        "modelo": 0.04259786139723946
       }
     },
     {
       "name": "Workout rock",
       "input": {
-        "g": 15,
+        "g": 84,
         "m": [
-          11
+          37
         ],
         "i": [
-          10
+          21
         ],
         "bpm": 140
       },
@@ -68,16 +155,16 @@
         "animo": 0.20377068324339734,
         "instrumentos": 0.20377068324339734,
         "tempo": 0.172976236465898,
-        "modelo": 0.10846270730975058
+        "modelo": 0.11764705882352941
       }
     },
     {
       "name": "Horror",
       "input": {
-        "g": 8,
+        "g": 52,
         "m": [
-          7,
-          5
+          22,
+          15
         ],
         "i": [],
         "bpm": null
@@ -98,63 +185,30 @@
       ],
       "components": {
         "animo": 0.6123724356957946,
-        "modelo": 0.17976758274671623
+        "modelo": 0.02323067275795564
       }
     },
     {
       "name": "Funk",
       "input": {
-        "g": 6,
+        "g": 42,
         "m": [
-          9
+          29
         ],
         "i": [
-          2
-        ],
-        "bpm": null
-      },
-      "direct": [
-        "Fork and Spoon",
-        "Your Call",
-        "Smooth Move"
-      ],
-      "hybrid": [
-        "Fork and Spoon",
-        "Your Call",
-        "Smooth Move"
-      ],
-      "hits": [
-        3,
-        3
-      ],
-      "components": {
-        "animo": 0.42857142857142855,
-        "instrumentos": 0.3030457633656632,
-        "modelo": 0.04617535110871706
-      }
-    },
-    {
-      "name": "Soft guitar",
-      "input": {
-        "g": null,
-        "m": [
-          15,
           4
         ],
-        "i": [
-          10
-        ],
         "bpm": null
       },
       "direct": [
-        "Somewhere Sunny",
-        "Windswept",
-        "Midnight Tale"
+        "Fork and Spoon",
+        "Classic Fonk",
+        "Happy"
       ],
       "hybrid": [
-        "Windswept",
-        "Silver Blue Light",
-        "Almost Bliss"
+        "Fork and Spoon",
+        "Classic Fonk",
+        "Happy"
       ],
       "hits": [
         3,
@@ -167,27 +221,60 @@
       }
     },
     {
+      "name": "Soft guitar",
+      "input": {
+        "g": null,
+        "m": [
+          51,
+          9
+        ],
+        "i": [
+          21
+        ],
+        "bpm": null
+      },
+      "direct": [
+        "Sensual Summer Breeze",
+        "Somewhere Sunny",
+        "bluzynette"
+      ],
+      "hybrid": [
+        "Sensual Summer Breeze",
+        "Pantin des cendres",
+        "Lying Down"
+      ],
+      "hits": [
+        3,
+        3
+      ],
+      "components": {
+        "animo": 0.42857142857142855,
+        "instrumentos": 0.42857142857142855,
+        "modelo": 0.12606258079933588
+      }
+    },
+    {
       "name": "Playful flute",
       "input": {
         "g": null,
         "m": [
-          2,
-          10
+          7,
+          35
         ],
         "i": [
-          9
+          20
         ],
         "bpm": null
       },
       "direct": [
         "Sneaky",
-        "Fluffing a Duck",
-        "Radio Martini"
+        "Dudki",
+        "Fluffing a Duck"
       ],
       "hybrid": [
         "Sneaky",
-        "Flighty Theme",
-        "Monkeys Spinning Monkeys"
+        "Dudki",
+        "Flighty Theme"
       ],
       "hits": [
         3,
@@ -204,23 +291,23 @@
       "input": {
         "g": null,
         "m": [
-          20,
-          8
+          69,
+          24
         ],
         "i": [
-          20
+          32
         ],
         "bpm": null
       },
       "direct": [
         "Thaxted (Holst)",
         "Second Coming - no percussion",
-        "Danse Macabre - Big Hit 2"
+        "Colors Of An Orchestra"
       ],
       "hybrid": [
         "Second Coming - no percussion",
         "Thaxted (Holst)",
-        "Egmont Overture Finale"
+        "Colors Of An Orchestra"
       ],
       "hits": [
         3,
@@ -237,31 +324,31 @@
       "input": {
         "g": null,
         "m": [
-          4
+          9
         ],
         "i": [
-          12
+          23
         ],
         "bpm": null
       },
       "direct": [
+        "La Nuit Du Chasseur",
         "Evening Fall (Harp)",
-        "Canon in D for Two Renaissance Harps",
-        "Canon in D for Two Harps"
+        "Canon in D for Two Renaissance Harps"
       ],
       "hybrid": [
+        "La Nuit Du Chasseur",
         "Evening Fall (Harp)",
-        "Enchanted Journey",
-        "Canon in D for Two Renaissance Harps"
+        "Nightpass (Calmer)"
       ],
       "hits": [
         3,
         3
       ],
       "components": {
-        "animo": 0.24743582965269678,
+        "animo": 0.3030457633656632,
         "instrumentos": 0.42857142857142855,
-        "modelo": 0.14285714285714285
+        "modelo": 0.021978181528073796
       }
     },
     {
@@ -269,23 +356,23 @@
       "input": {
         "g": null,
         "m": [
-          17,
-          5
+          59,
+          15
         ],
         "i": [
-          25
+          41
         ],
         "bpm": null
       },
       "direct": [
         "Grave Matters",
         "Dark Times",
-        "Promising Relationship"
+        "Dramata - Ambivalence"
       ],
       "hybrid": [
         "Grave Matters",
         "Dark Times",
-        "Promising Relationship"
+        "Dramata - Ambivalence"
       ],
       "hits": [
         3,
@@ -300,12 +387,12 @@
     {
       "name": "Electronic drive",
       "input": {
-        "g": 5,
+        "g": 35,
         "m": [
-          6
+          21
         ],
         "i": [
-          26
+          42
         ],
         "bpm": null
       },
@@ -326,7 +413,7 @@
       "components": {
         "animo": 0.42857142857142855,
         "instrumentos": 0.3030457633656632,
-        "modelo": 0.14285714285714285
+        "modelo": 0.008158621388057409
       }
     },
     {
@@ -334,31 +421,31 @@
       "input": {
         "g": null,
         "m": [
-          3,
-          9
+          8,
+          29
         ],
         "i": [
-          29
+          45
         ],
         "bpm": null
       },
       "direct": [
         "First Call",
-        "Dispersion Relation",
-        "Farting Around"
+        "Funk Tune",
+        "Funk"
       ],
       "hybrid": [
-        "First Call",
         "Dispersion Relation",
-        "Farting Around"
+        "First Call",
+        "Funk Tune"
       ],
       "hits": [
         3,
         3
       ],
       "components": {
-        "animo": 0.3030457633656632,
-        "instrumentos": 0.42857142857142855,
+        "animo": 0.42857142857142855,
+        "instrumentos": 0.1749635530559413,
         "modelo": 0.14285714285714285
       }
     },
@@ -367,10 +454,10 @@
       "input": {
         "g": null,
         "m": [
-          13
+          45
         ],
         "i": [
-          23
+          36
         ],
         "bpm": null
       },
@@ -380,9 +467,9 @@
         "Colorless Aura"
       ],
       "hybrid": [
-        "SCP-x7x (6th Floor)",
-        "Dark Hallway (clean)",
-        "Nervous"
+        "Gymnopedie No. 3",
+        "Ghost Dance",
+        "Comfortable Mystery 4"
       ],
       "hits": [
         3,
@@ -391,7 +478,7 @@
       "components": {
         "animo": 0.3030457633656632,
         "instrumentos": 0.42857142857142855,
-        "modelo": 0.13587279673482414
+        "modelo": 0.14285714285714285
       }
     },
     {
@@ -399,11 +486,11 @@
       "input": {
         "g": null,
         "m": [
-          18,
-          11
+          64,
+          37
         ],
         "i": [
-          22
+          35
         ],
         "bpm": null
       },
@@ -432,10 +519,10 @@
       "input": {
         "g": null,
         "m": [
-          9
+          29
         ],
         "i": [
-          21
+          33
         ],
         "bpm": null
       },
@@ -445,9 +532,9 @@
         "Carnivale Intrigue"
       ],
       "hybrid": [
-        "Sinfonia No. 3 in D Major - BWV 789",
-        "Wah Game Loop",
-        "Hep Cats"
+        "Stupid Song(s)",
+        "Talkwalk (Looking For The Boz)",
+        "Disco Scream From The Sinking Loveboat"
       ],
       "hits": [
         3,
@@ -455,7 +542,7 @@
       ],
       "components": {
         "animo": 0.42857142857142855,
-        "instrumentos": 0.24743582965269678,
+        "instrumentos": 0.13552618543578768,
         "modelo": 0.14285714285714285
       }
     },
@@ -464,11 +551,11 @@
       "input": {
         "g": null,
         "m": [
-          15,
-          4
+          51,
+          9
         ],
         "i": [
-          6
+          11
         ],
         "bpm": null
       },
@@ -489,18 +576,18 @@
       "components": {
         "animo": 0.42857142857142855,
         "instrumentos": 0.24743582965269678,
-        "modelo": 0.14285714285714285
+        "modelo": 0.11936771120014471
       }
     },
     {
       "name": "Reggae",
       "input": {
-        "g": 14,
+        "g": 83,
         "m": [
-          9
+          29
         ],
         "i": [
-          8
+          17
         ],
         "bpm": null
       },
@@ -521,7 +608,7 @@
       "components": {
         "animo": 0.3030457633656632,
         "instrumentos": 0.24743582965269678,
-        "modelo": 0.018914089677794486
+        "modelo": 0.013140055116177793
       }
     }
   ]

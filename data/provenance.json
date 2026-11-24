@@ -1,8 +1,20 @@
 {
-  "metadata_endpoint": "https://incompetech.com/music/royalty-free/pieces.json",
-  "raw_json_sha256": "54802ad340562624b9d1c9c97aa9f005e2b9bf79001f8a1a07ed857e68b2164a",
-  "track_csv_sha256": "87b21339cbb659cbe9ba9f0509ff3beb3b4affdacca4f2faa05df1a09e262811",
-  "snapshot_records": 1443,
-  "track_details_and_genre_map": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100001",
-  "source_audio_license": "https://creativecommons.org/licenses/by/4.0/"
+  "incompetech": {
+    "metadata_endpoint": "https://incompetech.com/music/royalty-free/pieces.json",
+    "raw_json_sha256": "54802ad340562624b9d1c9c97aa9f005e2b9bf79001f8a1a07ed857e68b2164a",
+    "track_csv_sha256": "87b21339cbb659cbe9ba9f0509ff3beb3b4affdacca4f2faa05df1a09e262811",
+    "snapshot_records": 1443,
+    "track_details_and_genre_map": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100001",
+    "source_audio_license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "jamendo": {
+    "hf_dataset": "m-a-p/MTG",
+    "revision": "e900ccbfcc7cc73c63e1e8ec85dbc00c0039f677",
+    "files": {
+      "autotagging.tsv": "a30655f45f4a7b4f9dba2d6b51d78733be33687eae3e8b9795e2234d54ef4e56",
+      "raw.meta.tsv": "bb1efa2876536cbe1a8b67db5dda15249ca144f0cff69e481b638803cbdc9aca"
+    },
+    "source_metadata_license": "CC BY-NC-SA 4.0",
+    "included": 55213
+  }
 }

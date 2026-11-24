@@ -3,6 +3,9 @@ const fs = require("node:fs"),
   d = require("../data/model.json"),
   rank = require("../src/rank.js");
 const profiles = [
+  ["Hip hop with bass", "Hip Hop", "", "Bass"],
+  ["Reggae with guitar", "Reggae", "", "Guitar"],
+  ["Jazz with piano", "Jazz", "", "Piano"],
   ["Study jazz", "Jazz", "Relaxed", "Piano", 90],
   ["Workout rock", "Rock", "Intense", "Guitar", 140],
   ["Horror", "Horror", "Eerie|Dark", ""],
@@ -46,7 +49,7 @@ for (const [name, g, m, i, bpm] of profiles) {
     (rows) =>
       rows.filter(
         ({ s }) =>
-          (p.g === null || s[2] === p.g) &&
+          (p.g === null || s[2].includes(p.g)) &&
           (!p.m.length || p.m.some((j) => s[3].includes(j))) &&
           (!p.i.length || p.i.some((j) => s[4].includes(j))) &&
           (p.bpm === null || (s[5] !== null && Math.abs(s[5] - p.bpm) <= 30)),
@@ -72,7 +75,7 @@ const jazz = rank(d, {
   strict: true,
 });
 assert.equal(jazz.rows[0].s[1], "Samba Isobel");
-assert.equal(detail[1].hybrid[0], "Neolith");
+assert.equal(detail[4].hybrid[0], "Neolith");
 assert.equal(rank(d, {}).status, "empty");
 assert.equal(
   rank(d, {
@@ -84,7 +87,10 @@ assert.equal(
 );
 assert.throws(() => rank(d, { bpm: -1 }));
 assert.throws(() => rank(d, { i: [999] }));
-assert(Math.abs(jazz.prob.reduce((a, b) => a + b) - 1) < 1e-8);
+assert(
+  jazz.prob.length === d.genres.length &&
+    jazz.prob.every((v) => v >= 0 && v <= 1),
+);
 assert(
   jazz.rows.every(
     (v) =>
@@ -101,10 +107,42 @@ assert.deepEqual(
     strict: true,
   }),
 );
-const out = { profiles: 16, slots: 48, direct, hybrid, changed, detail };
+for (let g = 0; g < d.genres.length; g++) {
+  const rows = rank(d, { g }).rows;
+  assert(rows.length > 0 && rows.every((v) => v.s[2].includes(g)));
+}
+const hop = rank(d, {
+  g: d.genres.indexOf("Hip Hop"),
+  i: ids("Bass", d.instruments),
+  strict: true,
+}).rows;
+assert.equal(new Set(hop.map((v) => v.s[6])).size, 5);
+const seed = hop[0].s;
+const related = rank(d, { seed: seed[0] }).rows;
+assert(
+  related.length &&
+    related.every(
+      (v) => v.s[0] !== seed[0] && v.s[2].some((j) => seed[2].includes(j)),
+    ),
+);
+const out = {
+  profiles: profiles.length,
+  slots: profiles.length * 3,
+  direct,
+  hybrid,
+  changed,
+  detail,
+};
 if (process.argv.includes("--write"))
   fs.writeFileSync("evidence/ranking.json", JSON.stringify(out, null, 2));
-console.log({ profiles: 16, slots: 48, direct, hybrid, changed });
-console.log("Jazz:", detail[0].hybrid.join(", "));
-console.log("Rock:", detail[1].hybrid.join(", "));
-console.log("Empty: empty; Urban + harpsichord (strict): no_match.");
+console.log({
+  profiles: out.profiles,
+  slots: out.slots,
+  direct,
+  hybrid,
+  changed,
+  genreFilters: d.genres.length,
+});
+for (const item of detail.slice(0, 5))
+  console.log(item.name + ":", item.hybrid.join(", "));
+console.log("Empty: empty; Urban + Harpsichord (strict): no_match");

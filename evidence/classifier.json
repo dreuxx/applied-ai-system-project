@@ -1,8 +1,22 @@
 {
-  "train": 1172,
-  "test": 271,
-  "prior_top1": 56,
-  "top1": 140,
-  "top3": 201,
-  "macro_recall": 0.2590873142009506
+  "tracks": 56656,
+  "artists": 3548,
+  "sources": {
+    "Incompetech": 1443,
+    "MTG-Jamendo": 55213
+  },
+  "genres": 103,
+  "moods": 70,
+  "instruments": 53,
+  "vector_dimensions": 229,
+  "eligible_for_training": 34074,
+  "fit": 28099,
+  "holdout": 5975,
+  "training_artists": 1870,
+  "holdout_artists": 447,
+  "overlap_artists": 0,
+  "top1": 3025,
+  "top3": 4268,
+  "prior_top1": 1912,
+  "missing_bpm": 55460
 }

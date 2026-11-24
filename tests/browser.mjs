@@ -33,8 +33,8 @@ try {
   ok((await p.locator("article").count()) === 0, "empty profile");
   await p.locator("#preset").click();
   ok(
-    (await p.locator("article h3").first().innerText()) === "Samba Isobel",
-    "jazz profile",
+    (await p.locator("article h3").first().innerText()) === "Big Plans Remix",
+    "hip hop profile",
   );
   ok((await p.locator("article").count()) === 5, "five results");
   await p.locator("#explain summary").click();
@@ -49,7 +49,23 @@ try {
       fileURLToPath(new URL("../data/preferencias.csv", import.meta.url)),
     );
   await p.locator("#imported").waitFor();
-  ok((await p.locator("#saved option").count()) === 4, "local CSV import");
+  ok((await p.locator("#saved option").count()) === 7, "local CSV import");
+  ok(
+    (await p.locator("article").first().innerText()).includes("Kellee Maize"),
+    "correct Jamendo artist",
+  );
+  ok(
+    (await p.locator("article a").first().getAttribute("href")).startsWith(
+      "https://www.jamendo.com/track/",
+    ),
+    "Jamendo source URL",
+  );
+  await p.locator("#saved").selectOption("6");
+  await p.locator("#apply").click();
+  ok(
+    (await p.locator("article").first().innerText()).includes("Le Zaarth"),
+    "multi-artist CSV profile",
+  );
   await p.locator("#saved").selectOption("1");
   await p.locator("#apply").click();
   ok(
@@ -75,13 +91,11 @@ try {
     !(await p.locator("article h3").allInnerTexts()).includes("C-Funk"),
     "seed excluded",
   );
-  await p
-    .locator("#file")
-    .setInputFiles({
-      name: "bad.csv",
-      mimeType: "text/csv",
-      buffer: Buffer.from("bad\nx"),
-    });
+  await p.locator("#file").setInputFiles({
+    name: "bad.csv",
+    mimeType: "text/csv",
+    buffer: Buffer.from("bad\nx"),
+  });
   await p.waitForFunction(() =>
     document.querySelector("#csvStatus").textContent.includes("encabezado"),
   );
