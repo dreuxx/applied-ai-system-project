@@ -50,3 +50,20 @@ Now the new service worker replaces the old one as soon as its files are cached,
   appeared without any action, and the offline reload still worked. One earlier run of the same sequence
   timed out waiting for a reload to finish and was not reproduced.
 tests/expo-browser.mjs passed against the production preview with this change.
+
+Update 2026-11-24, authenticated Spotify requests.
+Spotify credentials were set as server-side environment variables: an untracked .env file locally and
+  the site settings on Netlify (scopes include Functions), followed by a new deployment.
+  The repository contains only .env.example with empty values; git check-ignore confirms .env is ignored.
+Live Spotify Web API lookups, same answers from node server/local.cjs and from https://cuecrate.netlify.app:
+  GET /api/tracks/USUAN1100003/spotify (Poofy Reel, Kevin MacLeod) -> matched, open.spotify.com/track/4hx0EvrXbbS80pn6aR948S
+  GET /api/tracks/USUAN1100004/spotify (Zombie Hoodoo, Kevin MacLeod) -> matched, open.spotify.com/track/0xlOwDnrN0d99ENcBICzO6
+  GET /api/tracks/USUAN1100001/spotify (C-Funk, Kevin MacLeod) -> not_found, manual search link
+  GET /api/tracks/track_0521030/spotify (Big Plans Remix, Kellee Maize) -> not_found, manual search link
+Before the new deployment the live site still answered unconfigured for all four.
+Live site in Google Chrome at 1280x800: search "Poofy Reel" on Explorar, open the track, Buscar en Spotify
+  -> "Coincidencia de título y artista." and "Abrir canción en Spotify", zero page errors.
+The earlier lines that say the site has no Spotify credentials describe its state before this update.
+The automated tests still use simulated Spotify responses. A match requires the same title and artist,
+  so a recording listed on Spotify under a different title or artist name returns not_found.
+Still not performed: physical phone or simulator run, native binary build.

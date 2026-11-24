@@ -60,7 +60,7 @@ La primera consulta devuelve `{"status":"ok","tracks":56656,"genres":103}`. La p
 
 ## 4. Spotify opcional
 
-La ficha ofrece **Buscar en Spotify**. Sin credenciales puedes abrir la búsqueda pública por título y artista. Para consultar la Web API, registra tu app en Spotify for Developers, copia `.env.example` a `.env` y configura **SPOTIFY_CLIENT_ID** y **SPOTIFY_CLIENT_SECRET**. Reinicia el servidor. En Netlify configura esas variables en los ajustes del sitio para Functions. El servidor obtiene el token por Client Credentials. Las claves van exclusivamente en el servidor.
+La ficha ofrece **Buscar en Spotify**. Sin credenciales puedes abrir la búsqueda pública por título y artista. Para consultar la Web API, registra tu app en Spotify for Developers, copia `.env.example` a `.env` y configura **SPOTIFY_CLIENT_ID** y **SPOTIFY_CLIENT_SECRET**. Reinicia el servidor. En Netlify configura esas variables en los ajustes del sitio para Functions. El servidor obtiene el token por Client Credentials. Las claves van exclusivamente en el servidor: `.env` está excluido por `.gitignore` y el repositorio solo contiene `.env.example` con los valores vacíos. La demo en línea ya tiene sus credenciales configuradas en Netlify. Para probarla, busca *Poofy Reel* en **Explorar**, abre la canción y pulsa **Buscar en Spotify**.
 
 Si la búsqueda encuentra el mismo título y artista, la app muestra **Abrir canción en Spotify**. Ante una grabación ausente, credenciales faltantes o servicio no disponible, la interfaz indica el estado y ofrece búsqueda manual. [Búsqueda de Spotify](https://developer.spotify.com/documentation/web-api/reference/search) · [Modo desarrollo y acceso](https://developer.spotify.com/documentation/web-api/concepts/quota-modes).
 
