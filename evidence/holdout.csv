@@ -1,0 +1,272 @@
+isrc,genre,pred1,pred2,pred3
+USUAN1100001,Funk,Jazz,World,Funk
+USUAN1100004,Horror,Horror,Soundtrack,Unclassifiable
+USUAN1100005,Horror,Horror,Soundtrack,Electronica
+USUAN1100012,Holiday,Contemporary,Soundtrack,Silent Film Score
+USUAN1100018,Silent Film Score,Silent Film Score,Soundtrack,Horror
+USUAN1100019,Classical,Silent Film Score,Horror,Soundtrack
+USUAN1100035,Soundtrack,Soundtrack,Contemporary,Classical
+USUAN1100048,Horror,Horror,Soundtrack,Electronica
+USUAN1100054,Soundtrack,Soundtrack,Horror,Classical
+USUAN1100074,Contemporary,Contemporary,Classical,Soundtrack
+USUAN1100077,Electronica,Soundtrack,Electronica,Rock
+USUAN1100080,Jazz,Jazz,Silent Film Score,Soundtrack
+USUAN1100083,Jazz,Jazz,World,Funk
+USUAN1100089,Contemporary,Soundtrack,Contemporary,Horror
+USUAN1100095,Rock,Rock,Soundtrack,Funk
+USUAN1100097,Contemporary,Contemporary,Soundtrack,Classical
+USUAN1100103,Funk,Rock,Jazz,Funk
+USUAN1100104,Soundtrack,Soundtrack,Contemporary,Horror
+USUAN1100108,Blues,Soundtrack,Contemporary,Unclassifiable
+USUAN1100109,Unclassifiable,Horror,Soundtrack,Electronica
+USUAN1100117,Soundtrack,Soundtrack,Horror,World
+USUAN1100122,Electronica,Soundtrack,Electronica,Horror
+USUAN1100125,Soundtrack,Horror,Soundtrack,Electronica
+USUAN1100129,Contemporary,Electronica,Contemporary,Unclassifiable
+USUAN1100130,Latin,Rock,Jazz,Unclassifiable
+USUAN1100132,Polka,Soundtrack,World,Unclassifiable
+USUAN1100133,Latin,Soundtrack,Unclassifiable,Jazz
+USUAN1100134,Latin,Soundtrack,Unclassifiable,Jazz
+USUAN1100144,Silent Film Score,Silent Film Score,Unclassifiable,Contemporary
+USUAN1100149,Modern,Horror,Contemporary,Soundtrack
+USUAN1100155,Electronica,Soundtrack,Electronica,World
+USUAN1100156,Silent Film Score,Silent Film Score,Contemporary,Unclassifiable
+USUAN1100159,Horror,Soundtrack,Horror,Unclassifiable
+USUAN1100168,Polka,Soundtrack,World,Unclassifiable
+USUAN1100170,Soundtrack,Soundtrack,Contemporary,Horror
+USUAN1100171,Contemporary,Horror,Soundtrack,Contemporary
+USUAN1100175,Contemporary,Contemporary,Soundtrack,Classical
+USUAN1100185,Jazz,Soundtrack,Contemporary,Rock
+USUAN1100199,Jazz,Soundtrack,Jazz,World
+USUAN1100202,Jazz,Jazz,Silent Film Score,Soundtrack
+USUAN1100212,Unclassifiable,Unclassifiable,Silent Film Score,Soundtrack
+USUAN1100217,Silent Film Score,Silent Film Score,Soundtrack,Electronica
+USUAN1100225,Polka,Rock,Unclassifiable,Soundtrack
+USUAN1100235,Contemporary,Contemporary,Soundtrack,Horror
+USUAN1100236,Soundtrack,Soundtrack,Horror,Classical
+USUAN1100239,World,World,Soundtrack,Unclassifiable
+USUAN1100249,Polka,Silent Film Score,Unclassifiable,Soundtrack
+USUAN1100258,Jazz,Jazz,Unclassifiable,Soundtrack
+USUAN1100266,Contemporary,Contemporary,Soundtrack,Unclassifiable
+USUAN1100268,Soundtrack,Soundtrack,Horror,Unclassifiable
+USUAN1100271,Horror,Soundtrack,Horror,Unclassifiable
+USUAN1100273,Electronica,Soundtrack,Unclassifiable,World
+USUAN1100280,Rock,Rock,Electronica,Unclassifiable
+USUAN1100282,Contemporary,Contemporary,Soundtrack,Silent Film Score
+USUAN1100288,Unclassifiable,Unclassifiable,Soundtrack,Silent Film Score
+USUAN1100297,World,Soundtrack,World,Classical
+USUAN1100306,World,Soundtrack,World,Unclassifiable
+USUAN1100310,Silent Film Score,Silent Film Score,Contemporary,Unclassifiable
+USUAN1100317,Jazz,Jazz,Silent Film Score,Contemporary
+USUAN1100336,Rock,World,Unclassifiable,Electronica
+USUAN1100338,Soundtrack,Soundtrack,Horror,Classical
+USUAN1100340,World,Soundtrack,Classical,World
+USUAN1100369,Holiday,Soundtrack,Contemporary,Unclassifiable
+USUAN1100373,Soundtrack,Soundtrack,Contemporary,Unclassifiable
+USUAN1100378,Horror,Horror,Soundtrack,Unclassifiable
+USUAN1100389,World,World,Soundtrack,Unclassifiable
+USUAN1100391,Holiday,Contemporary,Soundtrack,Holiday
+USUAN1100399,Soundtrack,Soundtrack,World,Unclassifiable
+USUAN1100415,Classical,Classical,Soundtrack,Unclassifiable
+USUAN1100421,Soundtrack,Soundtrack,Unclassifiable,Stings
+USUAN1100425,Unclassifiable,Unclassifiable,Soundtrack,Silent Film Score
+USUAN1100426,Latin,World,Jazz,Unclassifiable
+USUAN1100428,Soundtrack,Soundtrack,World,Unclassifiable
+USUAN1100430,Stings,Soundtrack,World,Unclassifiable
+USUAN1100434,Silent Film Score,Soundtrack,Silent Film Score,Horror
+USUAN1100440,Electronica,Electronica,Unclassifiable,Soundtrack
+USUAN1100452,Soundtrack,Soundtrack,Contemporary,Classical
+USUAN1100453,World,Soundtrack,World,Horror
+USUAN1100457,Silent Film Score,Silent Film Score,Soundtrack,Contemporary
+USUAN1100458,Modern,Contemporary,Soundtrack,Silent Film Score
+USUAN1100466,World,Soundtrack,World,Horror
+USUAN1100469,Horror,Horror,Soundtrack,Contemporary
+USUAN1100474,Funk,Rock,Electronica,Unclassifiable
+USUAN1100484,Unclassifiable,Rock,Soundtrack,Unclassifiable
+USUAN1100495,Rock,Jazz,Rock,Contemporary
+USUAN1100496,Rock,Contemporary,Jazz,Rock
+USUAN1100505,Unclassifiable,Soundtrack,Horror,Contemporary
+USUAN1100511,Soundtrack,Soundtrack,World,Unclassifiable
+USUAN1100524,Classical,Contemporary,Soundtrack,Horror
+USUAN1100525,Soundtrack,Soundtrack,World,Unclassifiable
+USUAN1100526,Soundtrack,Soundtrack,Horror,Contemporary
+USUAN1100533,Classical,Unclassifiable,Soundtrack,Silent Film Score
+USUAN1100537,Soundtrack,Contemporary,Soundtrack,Classical
+USUAN1100541,Soundtrack,Soundtrack,Classical,World
+USUAN1100543,Soundtrack,Rock,Soundtrack,Unclassifiable
+USUAN1100574,Horror,Horror,Soundtrack,Unclassifiable
+USUAN1100577,Horror,Horror,Soundtrack,Contemporary
+USUAN1100587,Soundtrack,Soundtrack,Classical,Horror
+USUAN1100588,Soundtrack,Soundtrack,World,Unclassifiable
+USUAN1100595,Jazz,Jazz,Soundtrack,Unclassifiable
+USUAN1100599,World,World,Soundtrack,Unclassifiable
+USUAN1100605,Unclassifiable,Unclassifiable,World,Soundtrack
+USUAN1100614,World,Soundtrack,Unclassifiable,World
+USUAN1100616,Unclassifiable,Soundtrack,Horror,World
+USUAN1100617,Unclassifiable,World,Unclassifiable,Electronica
+USUAN1100620,Unclassifiable,World,Soundtrack,Electronica
+USUAN1100626,Pop,Contemporary,Unclassifiable,Classical
+USUAN1100652,Soundtrack,Soundtrack,Horror,Contemporary
+USUAN1100653,Electronica,Horror,Soundtrack,Unclassifiable
+USUAN1100655,Electronica,Soundtrack,Horror,Unclassifiable
+USUAN1100656,Classical,Soundtrack,Unclassifiable,World
+USUAN1100658,Contemporary,Contemporary,Soundtrack,Classical
+USUAN1100680,World,Soundtrack,Contemporary,Classical
+USUAN1100681,Classical,Soundtrack,Classical,Contemporary
+USUAN1100686,Latin,World,Unclassifiable,Soundtrack
+USUAN1100698,Soundtrack,Soundtrack,Electronica,Unclassifiable
+USUAN1100700,Contemporary,World,Soundtrack,Contemporary
+USUAN1100703,Soundtrack,Soundtrack,Unclassifiable,Electronica
+USUAN1100710,Horror,Horror,Soundtrack,Unclassifiable
+USUAN1100711,Horror,Horror,Soundtrack,Electronica
+USUAN1100713,Horror,Horror,Soundtrack,Unclassifiable
+USUAN1100715,Contemporary,Contemporary,Unclassifiable,World
+USUAN1100716,Contemporary,Contemporary,Unclassifiable,Soundtrack
+USUAN1100717,Contemporary,Contemporary,Soundtrack,Unclassifiable
+USUAN1100721,Polka,Electronica,Unclassifiable,Silent Film Score
+USUAN1100726,Soundtrack,Soundtrack,Unclassifiable,World
+USUAN1100743,Contemporary,Contemporary,Soundtrack,World
+USUAN1100751,Electronica,Electronica,Unclassifiable,World
+USUAN1100752,Soundtrack,Soundtrack,Unclassifiable,Contemporary
+USUAN1100759,Contemporary,Contemporary,Soundtrack,Unclassifiable
+USUAN1100767,Funk,Soundtrack,World,Electronica
+USUAN1100784,Soundtrack,Soundtrack,Horror,Unclassifiable
+USUAN1100785,Classical,Contemporary,Soundtrack,Silent Film Score
+USUAN1100787,Classical,Contemporary,Classical,Soundtrack
+USUAN1100791,Rock,Jazz,Funk,Rock
+USUAN1100797,Classical,Soundtrack,Classical,Unclassifiable
+USUAN1100799,Contemporary,Classical,Contemporary,World
+USUAN1100815,Soundtrack,Soundtrack,Unclassifiable,World
+USUAN1100819,Soundtrack,World,Unclassifiable,Contemporary
+USUAN1100822,Soundtrack,Soundtrack,Contemporary,Unclassifiable
+USUAN1100825,Electronica,Electronica,Contemporary,Unclassifiable
+USUAN1100827,World,World,Soundtrack,Electronica
+USUAN1100831,World,Soundtrack,World,Unclassifiable
+USUAN1100832,Polka,Electronica,Unclassifiable,Silent Film Score
+USUAN1100833,Polka,Electronica,Unclassifiable,Silent Film Score
+USUAN1100837,Rock,Rock,Jazz,Funk
+USUAN1100839,Funk,Jazz,Funk,Unclassifiable
+USUAN1100841,Rock,Rock,Jazz,Funk
+USUAN1100858,Contemporary,Contemporary,Soundtrack,Classical
+USUAN1100866,World,World,Electronica,Unclassifiable
+USUAN1100867,World,World,Soundtrack,Electronica
+USUAN1100874,Soundtrack,Soundtrack,World,Unclassifiable
+USUAN1100887,Soundtrack,Soundtrack,World,Unclassifiable
+USUAN1100888,Soundtrack,Soundtrack,Classical,Stings
+USUAN1100893,Soundtrack,Soundtrack,Unclassifiable,Electronica
+USUAN1100894,Unclassifiable,Contemporary,Soundtrack,Unclassifiable
+USUAN1200002,Disco,Electronica,Jazz,Unclassifiable
+USUAN1200017,Soundtrack,Soundtrack,Contemporary,Classical
+USUAN1200051,Unclassifiable,Soundtrack,Electronica,Unclassifiable
+USUAN1200067,Electronica,Electronica,Soundtrack,Unclassifiable
+USUAN1200068,Contemporary,Contemporary,Soundtrack,Jazz
+USUAN1200069,Classical,Soundtrack,Classical,Stings
+USUAN1200074,Unclassifiable,Soundtrack,Contemporary,Unclassifiable
+USUAN1200080,African,World,Soundtrack,Unclassifiable
+USUAN1200091,Disco,Electronica,Unclassifiable,Jazz
+USUAN1200095,Soundtrack,Soundtrack,Unclassifiable,World
+USUAN1200096,Silent Film Score,Silent Film Score,Contemporary,Unclassifiable
+USUAN1200097,Modern,Soundtrack,Horror,Unclassifiable
+USUAN1200099,Contemporary,Contemporary,Soundtrack,Unclassifiable
+USUAN1200105,Horror,Horror,Soundtrack,Contemporary
+USUAN1200108,Contemporary,Contemporary,Unclassifiable,World
+USUAN1200111,World,World,Soundtrack,Unclassifiable
+USUAN1300006,Electronica,Electronica,Unclassifiable,Rock
+USUAN1300007,Electronica,Electronica,Unclassifiable,Rock
+USUAN1300008,Electronica,Electronica,Unclassifiable,Rock
+USUAN1300013,Soundtrack,Soundtrack,World,Classical
+USUAN1300018,Electronica,Electronica,Unclassifiable,World
+USUAN1300020,Electronica,Classical,Electronica,Unclassifiable
+USUAN1300027,Contemporary,Contemporary,Soundtrack,Unclassifiable
+USUAN1300032,Unclassifiable,Jazz,Unclassifiable,Soundtrack
+USUAN1300040,Horror,Horror,Soundtrack,Unclassifiable
+USUAN1400001,Reggae,Contemporary,Unclassifiable,Classical
+USUAN1400010,Rock,Soundtrack,Unclassifiable,Electronica
+USUAN1400013,Contemporary,Rock,Contemporary,Unclassifiable
+USUAN1400019,World,Unclassifiable,World,Soundtrack
+USUAN1400025,Soundtrack,Soundtrack,Electronica,Unclassifiable
+USUAN1400034,Soundtrack,Soundtrack,Contemporary,Jazz
+USUAN1400040,Unclassifiable,Soundtrack,Unclassifiable,Horror
+USUAN1400051,World,Soundtrack,Unclassifiable,Contemporary
+USUAN1400057,Soundtrack,Electronica,Soundtrack,Unclassifiable
+USUAN1500001,World,World,Electronica,African
+USUAN1500010,Funk,Soundtrack,Electronica,World
+USUAN1500011,Stings,Soundtrack,World,Unclassifiable
+USUAN1500023,Electronica,Electronica,Horror,Unclassifiable
+USUAN1500029,Electronica,Electronica,Soundtrack,Unclassifiable
+USUAN1500030,Unclassifiable,Contemporary,Soundtrack,Unclassifiable
+USUAN1500043,Unclassifiable,Electronica,Unclassifiable,Soundtrack
+USUAN1500073,Electronica,Electronica,Unclassifiable,World
+USUAN1500079,Unclassifiable,Soundtrack,Unclassifiable,Horror
+USUAN1500085,Soundtrack,Soundtrack,Unclassifiable,Horror
+USUAN1600001,Electronica,Electronica,Unclassifiable,World
+USUAN1600004,Soundtrack,Soundtrack,Rock,Electronica
+USUAN1600005,Latin,Jazz,Contemporary,Soundtrack
+USUAN1600008,Electronica,Electronica,Soundtrack,Unclassifiable
+USUAN1600011,Ska,Jazz,Unclassifiable,Funk
+USUAN1600012,Latin,Soundtrack,Unclassifiable,Contemporary
+USUAN1600021,Electronica,Electronica,Soundtrack,Unclassifiable
+USUAN1600023,Contemporary,Soundtrack,Unclassifiable,Contemporary
+USUAN1600026,Unclassifiable,Electronica,Jazz,Unclassifiable
+USUAN1600034,Modern,World,Soundtrack,Unclassifiable
+USUAN1600038,Jazz,Unclassifiable,Rock,Soundtrack
+USUAN1600049,Funk,Jazz,Unclassifiable,Contemporary
+USUAN1600055,Latin,Contemporary,Jazz,Rock
+USUAN1600057,Electronica,Electronica,World,Unclassifiable
+USUAN1600060,Soundtrack,Soundtrack,Unclassifiable,Classical
+USUAN1600061,Soundtrack,Contemporary,Soundtrack,Unclassifiable
+USUAN1600067,Electronica,Electronica,World,Unclassifiable
+USUAN1700005,World,Soundtrack,World,Unclassifiable
+USUAN1700008,Soundtrack,Soundtrack,World,Unclassifiable
+USUAN1700009,Soundtrack,Rock,Soundtrack,Unclassifiable
+USUAN1700011,Rock,Unclassifiable,Jazz,Rock
+USUAN1700016,World,Jazz,Soundtrack,Unclassifiable
+USUAN1700029,Funk,Jazz,Reggae,Unclassifiable
+USUAN1700030,Soundtrack,Electronica,World,Unclassifiable
+USUAN1700037,Horror,Horror,Unclassifiable,Soundtrack
+USUAN1700052,Soundtrack,Soundtrack,Unclassifiable,World
+USUAN1700061,Electronica,Electronica,World,Unclassifiable
+USUAN1700062,Jazz,Unclassifiable,World,Soundtrack
+USUAN1700064,Soundtrack,Soundtrack,Unclassifiable,Contemporary
+USUAN1700068,Jazz,Jazz,Contemporary,Rock
+USUAN1700071,Jazz,Jazz,Contemporary,Funk
+USUAN1700072,Jazz,Jazz,Contemporary,Unclassifiable
+USUAN1700073,Jazz,Contemporary,Soundtrack,Jazz
+USUAN1700076,Jazz,Jazz,Soundtrack,Contemporary
+USUAN1700083,Soundtrack,Soundtrack,Electronica,World
+USUAN1800004,Electronica,Electronica,Jazz,Unclassifiable
+USUAN1800005,Pop,Electronica,Unclassifiable,Jazz
+USUAN1800010,Soundtrack,Electronica,Soundtrack,World
+USUAN1800011,Latin,Jazz,Contemporary,Unclassifiable
+USUAN1800012,World,Jazz,Funk,World
+USUAN1800014,Modern,Electronica,Contemporary,Unclassifiable
+USUAN1800016,Modern,Electronica,Contemporary,Unclassifiable
+USUAN1800021,Silent Film Score,Soundtrack,Silent Film Score,Unclassifiable
+USUAN1900001,Pop,World,Soundtrack,Unclassifiable
+USUAN1900012,Electronica,Electronica,World,Unclassifiable
+USUAN1900013,Electronica,Electronica,World,Unclassifiable
+USUAN1900014,Electronica,Electronica,Soundtrack,World
+USUAN1900019,World,World,Jazz,Unclassifiable
+USUAN1900023,Funk,Jazz,World,Soundtrack
+USUAN1900026,Classical,Soundtrack,Unclassifiable,World
+USUAN1900027,Holiday,Soundtrack,Silent Film Score,Unclassifiable
+USUAN1900041,African,World,Soundtrack,Contemporary
+USUAN1900043,Soundtrack,Soundtrack,Contemporary,Unclassifiable
+USUAN1900047,Soundtrack,Soundtrack,World,Unclassifiable
+USUAN1900052,Soundtrack,Soundtrack,World,Unclassifiable
+USUAN1900056,Jazz,Jazz,Contemporary,Soundtrack
+USUAN1900058,Silent Film Score,Silent Film Score,Contemporary,Soundtrack
+USUAN2000002,African,Soundtrack,World,Electronica
+USUAN2000008,Horror,Horror,Soundtrack,Unclassifiable
+USUAN2000024,Electronica,Electronica,Unclassifiable,World
+USUAN2100016,Soundtrack,Soundtrack,Contemporary,Jazz
+USUAN2100021,Holiday,Soundtrack,Unclassifiable,Jazz
+USUAN2100023,Contemporary,Jazz,Contemporary,Soundtrack
+USUAN2100024,Contemporary,Jazz,Contemporary,Soundtrack
+USUAN2100026,Unclassifiable,Jazz,Contemporary,Soundtrack
+USUAN2100031,World,Contemporary,Soundtrack,Unclassifiable
+USUAN2200002,Rock,Jazz,Rock,Soundtrack
+USUAN2300009,Electronica,Electronica,World,Unclassifiable
+USUAN2400001,World,Soundtrack,Contemporary,World
+USUAN2500002,World,World,Soundtrack,Electronica
+USUAN2500003,World,World,Soundtrack,Electronica

@@ -1,0 +1,8 @@
+{
+  "metadata_endpoint": "https://incompetech.com/music/royalty-free/pieces.json",
+  "raw_json_sha256": "54802ad340562624b9d1c9c97aa9f005e2b9bf79001f8a1a07ed857e68b2164a",
+  "track_csv_sha256": "87b21339cbb659cbe9ba9f0509ff3beb3b4affdacca4f2faa05df1a09e262811",
+  "snapshot_records": 1443,
+  "track_details_and_genre_map": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100001",
+  "source_audio_license": "https://creativecommons.org/licenses/by/4.0/"
+}
